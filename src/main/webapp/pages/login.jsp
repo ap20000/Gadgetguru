@@ -30,14 +30,14 @@
                     <i class="fas fa-lock"></i>
                     <input type="password" id="password" name="password" placeholder="Enter your password">
                 </div>
-                <a href="forgetPassword.jsp">Forgot password?</a>
+                <a href="/pages/forgetPassword.jsp">Forgot password?</a>
                 
                 <button type="submit" class="button">Submit</button>
 
             </form>
             <div class="signup">
                 <span class="signup">Don't have an account?
-                    <label for="check">Login</label>
+                    <a href="/pages//register.jsp">Register</a>
                 </span>
             </div>
         </div>

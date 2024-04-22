@@ -32,7 +32,7 @@ public class LogOutServlet extends HttpServlet {
 		}
 
 		// 3. Redirect to login page
-		response.sendRedirect(request.getContextPath() + stringUtil.PAGE_URL_LOGIN);
+		response.sendRedirect(request.getContextPath() + "/pages/welcome.jsp");
 	}
 
 }

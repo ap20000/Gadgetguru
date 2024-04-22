@@ -7,8 +7,11 @@ public class stringUtil {
 	public static final String INSERT_User = "INSERT INTO user "
 	        + "(user_name, full_name, email, phone_number, dob, address, password, gender,user_image,role)"
 	        + " VALUES (?, ?, ?, ?, ?, ?, ?, ?,?,?)";
+	 public static final String INSERT_Product = "INSERT INTO computer (computer_name, price, brand, product_image) VALUES (?, ?, ?, ?)";
 
 	public static final String GET_LOGIN_STUDENT_INFO = "SELECT * FROM user WHERE user_name = ?";
+	
+	
 	
 	public static final String IMAGE_DIR_USER = "Users\\NITRO5\\eclipse-workspace\\GadgetGuru_Accessories\\src\\main\\webapp\\resources\\images\\user\\";
 	public static final String IMAGE_DIR_SAVE_PATH = "C:" + File.separator + IMAGE_DIR_USER;

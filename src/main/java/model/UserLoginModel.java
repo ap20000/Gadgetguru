@@ -4,12 +4,17 @@ public class UserLoginModel {
 	private String user_name;
 	private String password;
 	
+	
+	
+
+	
 	public UserLoginModel(String user_name, String password) {
+		super();
 		this.user_name = user_name;
 		this.password = password;
 	}
 
-	
+
 
 	public String getUser_name() {
 		return user_name;
@@ -30,6 +35,9 @@ public class UserLoginModel {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+
+
 	
 	
 }

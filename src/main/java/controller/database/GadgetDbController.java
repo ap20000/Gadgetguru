@@ -8,8 +8,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
+import model.LoginResult;
 import model.PasswordEncryptionWithAes;
+import model.ProductModel;
+import model.ProductModeldata;
 import model.UserLoginModel;
 import model.UserModel;
 
@@ -128,9 +132,44 @@ public class GadgetDbController {
 		}
 	}
 
-	public int getUserLoginInfo(UserLoginModel loginModel) {
+//	public int getUserLoginInfo(UserLoginModel loginModel) {
+//	    try (Connection con = getConnection()) {
+//	        PreparedStatement st = getConnection().prepareStatement(stringUtil.GET_LOGIN_STUDENT_INFO);
+//
+//	        // Set the username in the first parameter of the prepared statement
+//	        st.setString(1, loginModel.getUser_name());
+//
+//	        ResultSet rs = st.executeQuery();
+//	        if (rs.next()) {
+//
+//	            String userDb = rs.getString("user_name");
+//
+//	            String encryptedPwd = rs.getString(stringUtil.password);
+//
+//	            System.out.println("encryptedPwd: " + encryptedPwd);
+//	            String decryptedPwd = PasswordEncryptionWithAes.decrypt(encryptedPwd, userDb);
+//	            System.out.println("decryptedPwd: " + decryptedPwd);
+//
+//	            if (userDb.equalsIgnoreCase(loginModel.getUser_name()) && decryptedPwd != null && decryptedPwd.equals((loginModel).getPassword())) {
+//	                // Login successful, return 1
+//	                return 1;
+//	            } else {
+//	                // Username or password mismatch, return 0
+//	                return 0;
+//	            }
+//	        } else {
+//	            // Username not found in the database, return -1
+//	            return -1;
+//	        }
+//	    } catch (SQLException | ClassNotFoundException ex) {
+//	        ex.printStackTrace();
+//	        return -2;
+//	    }
+//	}
+
+	public LoginResult getUserLoginInfo(UserLoginModel loginModel) {
 	    try (Connection con = getConnection()) {
-	        PreparedStatement st = getConnection().prepareStatement(stringUtil.GET_LOGIN_STUDENT_INFO);
+	        PreparedStatement st = con.prepareStatement(stringUtil.GET_LOGIN_STUDENT_INFO);
 
 	        // Set the username in the first parameter of the prepared statement
 	        st.setString(1, loginModel.getUser_name());
@@ -145,19 +184,25 @@ public class GadgetDbController {
 	            String decryptedPwd = PasswordEncryptionWithAes.decrypt(encryptedPwd, userDb);
 
 	            if (userDb.equalsIgnoreCase(loginModel.getUser_name()) && decryptedPwd != null && decryptedPwd.equals((loginModel).getPassword())) {
-	                // Login successful, return 1
-	                return 1;
+	                String role = rs.getString("role"); // Assuming 'role' is the column name for the user's role
+	                if (role != null) {
+	                    // User role found, return login result with role
+	                    return new LoginResult(1, role); // 1 indicates successful login
+	                } else {
+	                    // Role not found, return login result without role
+	                    return new LoginResult(1, null); // 1 indicates successful login
+	                }
 	            } else {
-	                // Username or password mismatch, return 0
-	                return 0;
+	                // Username or password mismatch, return login result without role
+	                return new LoginResult(0, null); // 0 indicates username or password mismatch
 	            }
 	        } else {
-	            // Username not found in the database, return -1
-	            return -1;
+	            // Username not found in the database, return login result without role
+	            return new LoginResult(-1, null); // -1 indicates username not found
 	        }
 	    } catch (SQLException | ClassNotFoundException ex) {
 	        ex.printStackTrace();
-	        return -2;
+	        return new LoginResult(-2, null); // -2 indicates error
 	    }
 	}
 
@@ -195,8 +240,75 @@ public class GadgetDbController {
             return -3; // Error
         }
     }
+    
+    public int isAdmin(String username){
+        try(Connection con = getConnection();
+                PreparedStatement st = con.prepareStatement("SELECT role FROM user WHERE user_name = ?")){
+            st.setString(1, username);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                // User name match in the database
+                String thisRole = rs.getString("role");
+                if(thisRole.equalsIgnoreCase("admin")){
+                    return 1;
+                } else {
+                    return 0;
+                }
+            } else {
+                // No matching record found
+                return -2;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        return -1;
+    }
 
 
+    public int addProduct(ProductModel productModel) {
+        try (Connection con = getConnection();
+             PreparedStatement st = con.prepareStatement("INSERT INTO computer (computer_name, price,  product_image) VALUES (?, ?,  ?)")) {
+            st.setString(1, productModel.getComputer_name());
+            st.setDouble(2, productModel.getPrice());
+            st.setString(3, productModel.getUserImageUrl());
+            int result = st.executeUpdate();
+
+            if (result > 0) {
+                return 1; // Success
+            } else {
+                return 0; // No rows affected
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            ex.printStackTrace();
+            return -1; // Error
+        }
+    }
+
+    public List<ProductModeldata> getAllProducts() {
+        List<ProductModeldata> products = new ArrayList<>();
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM computer");
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                int productId = rs.getInt("computer_Id");
+                String productName = rs.getString("computer_name");
+                double price = rs.getDouble("price");
+                String imageUrl = rs.getString("user_image");
+
+                ProductModeldata productModel = new ProductModeldata(productId, productName, price, imageUrl);
+                products.add(productModel);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            // Handle the exception appropriately, such as logging or throwing a custom exception
+        }
+        return products;
+    }
+
+        
 
     
 

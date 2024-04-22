@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import controller.database.GadgetDbController;
+import model.LoginResult;
 import model.UserLoginModel;
 import util.stringUtil;
 
@@ -24,30 +25,32 @@ public class LoginServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String username = request.getParameter("username");
-        System.out.println("Email from user: " + username);
         String password = request.getParameter("password");
-        System.out.println("Password from user: " + password);
 
-        UserLoginModel userLoginmodel = new UserLoginModel(username, password);
-        
-        System.out.println("Password from user: " + userLoginmodel);
+        UserLoginModel loginModel = new UserLoginModel(username, password);
+        loginModel.setUser_name(username);
+        loginModel.setPassword(password);
 
-        // Call DBController to validate login credentials
-        int loginResult = dbController.getUserLoginInfo(userLoginmodel);
-        System.out.println("Password from database: " + loginResult);
 
-        if (loginResult == 1) {
-            // Login successful
-        	HttpSession userSession = request.getSession();
-			userSession.setAttribute("username", username);
-			userSession.setMaxInactiveInterval(30*30);
-            System.out.println("Redirecting to home page...");
-            response.sendRedirect(request.getContextPath() + "/pages/welcome.jsp");
+        LoginResult loginResult = dbController.getUserLoginInfo(loginModel);
+
+        if (loginResult.getStatus() == 1) {
+        	 HttpSession userSession = request.getSession();
+             userSession.setAttribute("user_name", username);
+            if ("admin".equals(loginResult.getRole())) {
+            	
+                // User is admin, redirect to admin dashboard
+                response.sendRedirect(request.getContextPath() +"/pages/Dashboard.jsp");
+            } else {
+
+                // Redirect to home page
+                response.sendRedirect(request.getContextPath() + "/pages/welcome.jsp");
+                // User is not admin, redirect to home page
+                response.sendRedirect(request.getContextPath() +"/pages/welcome.jsp");
+            }
         } else {
-            // Login unsuccessful
-            System.out.println("Login unsuccessful. Redirecting to login page...");
-            request.setAttribute(stringUtil.MESSAGE_ERROR, stringUtil.MESSAGE_ERROR_LOGIN);
-            request.getRequestDispatcher(stringUtil.PAGE_URL_LOGIN).forward(request, response);
+            // Login failed, redirect to login page with error message
+            response.sendRedirect(request.getContextPath() +"login.jsp?error=1");
         }
     }
 }
