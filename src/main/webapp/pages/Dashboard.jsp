@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ page import="util.stringUtil" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,7 +10,13 @@
     <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
 </head>
 <body>
-<jsp:include page="header.jsp"/>
+
+<%
+    // Get the session and request objects
+    HttpSession userSession = request.getSession();
+    String currentUser = (String) userSession.getAttribute("username");
+    String contextPath = request.getContextPath();
+%>
    <input type="checkbox" id="menu-toggle">
     <div class="sidebar">
         
@@ -22,6 +29,25 @@
 
             <div class="side-menu">
                 <ul>
+                	 <li>
+		                <form action="<%
+		                    // Conditionally set the action URL based on user session
+		                    if (currentUser != null) {
+		                        out.print(contextPath + "/LogOutServlet");
+		                    } else {
+		                        out.print(contextPath + "/pages/login.jsp");
+		                    }
+		                %>" method="post">
+		                    <input type="submit" value="<%
+		                        // Conditionally set the button label based on user session
+		                        if (currentUser != null) {
+		                            out.print("Logout");
+		                        } else {
+		                            out.print("Login");
+		                        }
+		                    %>"/>
+		                </form>
+		            </li>
                     <li>
                        <a href="" class="active">
                             <span class="las la-home"></span>
@@ -45,7 +71,9 @@
                     
 
                 </ul>
+                
             </div>
+            
         </div>
     </div>
     
@@ -86,7 +114,7 @@
 
                     <div class="card">
                         <div class="card-head">
-                            <h2>107,200</h2>
+                            <h2>2</h2>
                             <span class="las la-user-friends"></span>
                         </div>
                         <div class="card-progress">
@@ -99,7 +127,7 @@
 
                     <div class="card">
                         <div class="card-head">
-                            <h2>340,230</h2>
+                            <h2>2</h2>
                             <span class="las la-eye"></span>
                         </div>
                         <div class="card-progress">
@@ -112,11 +140,11 @@
 
                     <div class="card">
                         <div class="card-head">
-                            <h2>$653,200</h2>
+                            <h2>10</h2>
                             <span class="las la-shopping-cart"></span>
                         </div>
                         <div class="card-progress">
-                            <small>Monthly revenue growth</small>
+                            <small>Total Product</small>
                             <div class="card-indicator">
                                 <div class="indicator three" style="width: 65%"></div>
                             </div>
@@ -156,13 +184,13 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>#5033</td>
+                                    <td>1</td>
                                     <td>
                                         <div class="client">
                                            <div class="client-img bg-img" style="background-image: url(img/3.jpeg)"></div>
                                             <div class="client-info">
-                                                <h4>Andrew Bruno</h4>
-                                                <small>bruno@crossover.org</small>
+                                                <h4>Mouse</h4>
+                                                <small>Brand</small>
                                             </div>
                                         </div>
                                     </td>
@@ -180,13 +208,13 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>#5033</td>
+                                    <td>2</td>
                                     <td>
                                         <div class="client">
                                            <div class="client-img bg-img" style="background-image: url(img/1.jpeg)"></div>
                                             <div class="client-info">
-                                                <h4>Exty Bruno</h4>
-                                                <small>exty@crossover.org</small>
+                                                <h4>keyboard</h4>
+                                                <small>Brand</small>
                                             </div>
                                         </div>
                                     </td>
@@ -205,13 +233,13 @@
                                     
                                 </tr>
                                 <tr>
-                                    <td>#5033</td>
+                                    <td>3</td>
                                     <td>
                                         <div class="client">
                                            <div class="client-img bg-img" style="background-image: url(img/1.jpeg)"></div>
                                             <div class="client-info">
-                                                <h4>Exty Bruno</h4>
-                                                <small>exty@crossover.org</small>
+                                                <h4>PC</h4>
+                                                <small>Brand</small>
                                             </div>
                                         </div>
                                     </td>
@@ -228,30 +256,7 @@
                                         <span class="Unstatus">Uncomplete</span>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>#5033</td>
-                                    <td>
-                                        <div class="client">
-                                           <div class="client-img bg-img" style="background-image: url(img/3.jpeg)"></div>
-                                            <div class="client-info">
-                                                <h4>Andrew Bruno</h4>
-                                                <small>bruno@crossover.org</small>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        $3171
-                                    </td>
-                                    <td>
-                                        19 April, 2022
-                                    </td>
-                                    <td>
-                                        -$205
-                                    </td>
-                                    <td>
-                                        <span class="Unstatus">Uncomplete</span>
-                                    </td>
-                                </tr>
+                               
                                
                                 
                                 

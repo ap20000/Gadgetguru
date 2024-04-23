@@ -9,6 +9,15 @@
 </head>
 
 <body>
+<%@page import="javax.servlet.http.HttpSession"%>
+<%@page import="javax.servlet.http.HttpServletRequest"%>
+
+<%
+    // Get the session and request objects
+    HttpSession userSession = request.getSession();
+    String currentUser = (String) userSession.getAttribute("username");
+    String contextPath = request.getContextPath();
+%>
     <nav class="navbar">
         <div class="max-width">
             <div class="logo"><a href="#">Gadget<span>Accessories</span></a></div>
@@ -28,6 +37,25 @@
                         </div>
                     </div>
                 </li>
+                <li>
+                <form action="<%
+                    // Conditionally set the action URL based on user session
+                    if (currentUser != null) {
+                        out.print(contextPath + "/LogOutServlet");
+                    } else {
+                        out.print(contextPath + "/pages/login.jsp");
+                    }
+                %>" method="post">
+                    <input type="submit" value="<%
+                        // Conditionally set the button label based on user session
+                        if (currentUser != null) {
+                            out.print("Logout");
+                        } else {
+                            out.print("Login");
+                        }
+                    %>"/>
+                </form>
+            </li>
                 
             </ul>            
         </div>    

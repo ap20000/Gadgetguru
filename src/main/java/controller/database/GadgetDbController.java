@@ -168,149 +168,146 @@ public class GadgetDbController {
 //	}
 
 	public LoginResult getUserLoginInfo(UserLoginModel loginModel) {
-	    try (Connection con = getConnection()) {
-	        PreparedStatement st = con.prepareStatement(stringUtil.GET_LOGIN_STUDENT_INFO);
+		try (Connection con = getConnection()) {
+			PreparedStatement st = con.prepareStatement(stringUtil.GET_LOGIN_STUDENT_INFO);
 
-	        // Set the username in the first parameter of the prepared statement
-	        st.setString(1, loginModel.getUser_name());
+			// Set the username in the first parameter of the prepared statement
+			st.setString(1, loginModel.getUser_name());
 
-	        ResultSet rs = st.executeQuery();
-	        if (rs.next()) {
+			ResultSet rs = st.executeQuery();
+			if (rs.next()) {
 
-	            String userDb = rs.getString("user_name");
+				String userDb = rs.getString("user_name");
 
-	            String encryptedPwd = rs.getString(stringUtil.password);
+				String encryptedPwd = rs.getString(stringUtil.password);
 
-	            String decryptedPwd = PasswordEncryptionWithAes.decrypt(encryptedPwd, userDb);
+				String decryptedPwd = PasswordEncryptionWithAes.decrypt(encryptedPwd, userDb);
 
-	            if (userDb.equalsIgnoreCase(loginModel.getUser_name()) && decryptedPwd != null && decryptedPwd.equals((loginModel).getPassword())) {
-	                String role = rs.getString("role"); // Assuming 'role' is the column name for the user's role
-	                if (role != null) {
-	                    // User role found, return login result with role
-	                    return new LoginResult(1, role); // 1 indicates successful login
-	                } else {
-	                    // Role not found, return login result without role
-	                    return new LoginResult(1, null); // 1 indicates successful login
-	                }
-	            } else {
-	                // Username or password mismatch, return login result without role
-	                return new LoginResult(0, null); // 0 indicates username or password mismatch
-	            }
-	        } else {
-	            // Username not found in the database, return login result without role
-	            return new LoginResult(-1, null); // -1 indicates username not found
-	        }
-	    } catch (SQLException | ClassNotFoundException ex) {
-	        ex.printStackTrace();
-	        return new LoginResult(-2, null); // -2 indicates error
-	    }
+				if (userDb.equalsIgnoreCase(loginModel.getUser_name()) && decryptedPwd != null
+						&& decryptedPwd.equals((loginModel).getPassword())) {
+					String role = rs.getString("role"); // Assuming 'role' is the column name for the user's role
+					if (role != null) {
+						// User role found, return login result with role
+						return new LoginResult(1, role); // 1 indicates successful login
+					} else {
+						// Role not found, return login result without role
+						return new LoginResult(1, null); // 1 indicates successful login
+					}
+				} else {
+					// Username or password mismatch, return login result without role
+					return new LoginResult(0, null); // 0 indicates username or password mismatch
+				}
+			} else {
+				// Username not found in the database, return login result without role
+				return new LoginResult(-1, null); // -1 indicates username not found
+			}
+		} catch (SQLException | ClassNotFoundException ex) {
+			ex.printStackTrace();
+			return new LoginResult(-2, null); // -2 indicates error
+		}
 	}
 
 	public int updateUserPassword(String username, String newPassword) {
-        try (Connection con = getConnection();
-             PreparedStatement st = con.prepareStatement("UPDATE user SET password = ? WHERE user_name = ?")) {
-            st.setString(1, PasswordEncryptionWithAes.encrypt(username, newPassword));
-            st.setString(2, username);
+		try (Connection con = getConnection();
+				PreparedStatement st = con.prepareStatement("UPDATE user SET password = ? WHERE user_name = ?")) {
+			st.setString(1, PasswordEncryptionWithAes.encrypt(username, newPassword));
+			st.setString(2, username);
 
-            int result = st.executeUpdate();
+			int result = st.executeUpdate();
 
-            if (result > 0) {
-                return 1; // Password updated successfully
-            } else {
-                return 0; // No rows affected (username not found)
-            }
-        } catch (ClassNotFoundException | SQLException ex) {
-            ex.printStackTrace();
-            return -1; // Error
-        }
-    }
+			if (result > 0) {
+				return 1; // Password updated successfully
+			} else {
+				return 0; // No rows affected (username not found)
+			}
+		} catch (ClassNotFoundException | SQLException ex) {
+			ex.printStackTrace();
+			return -1; // Error
+		}
+	}
 
-    public int updateUserPasswordIfValid(String username, String newPassword) {
-        try (Connection con = getConnection()) {
-            // Check if the username exists in the database
-            if (isUsernameExists(username)) {
-                // Username exists, update the password
-                return updateUserPassword(username, newPassword);
-            } else {
-                // Username not found, return -1
-                return -1;
-            }
-        } catch (SQLException | ClassNotFoundException ex) {
-            ex.printStackTrace();
-            return -3; // Error
-        }
-    }
-    
-    public int isAdmin(String username){
-        try(Connection con = getConnection();
-                PreparedStatement st = con.prepareStatement("SELECT role FROM user WHERE user_name = ?")){
-            st.setString(1, username);
-            ResultSet rs = st.executeQuery();
-            if (rs.next()) {
-                // User name match in the database
-                String thisRole = rs.getString("role");
-                if(thisRole.equalsIgnoreCase("admin")){
-                    return 1;
-                } else {
-                    return 0;
-                }
-            } else {
-                // No matching record found
-                return -2;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
-        }
-        return -1;
-    }
+	public int updateUserPasswordIfValid(String username, String newPassword) {
+		try (Connection con = getConnection()) {
+			// Check if the username exists in the database
+			if (isUsernameExists(username)) {
+				// Username exists, update the password
+				return updateUserPassword(username, newPassword);
+			} else {
+				// Username not found, return -1
+				return -1;
+			}
+		} catch (SQLException | ClassNotFoundException ex) {
+			ex.printStackTrace();
+			return -3; // Error
+		}
+	}
 
+	public int isAdmin(String username) {
+		try (Connection con = getConnection();
+				PreparedStatement st = con.prepareStatement("SELECT role FROM user WHERE user_name = ?")) {
+			st.setString(1, username);
+			ResultSet rs = st.executeQuery();
+			if (rs.next()) {
+				// User name match in the database
+				String thisRole = rs.getString("role");
+				if (thisRole.equalsIgnoreCase("admin")) {
+					return 1;
+				} else {
+					return 0;
+				}
+			} else {
+				// No matching record found
+				return -2;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException ex) {
+			ex.printStackTrace();
+		}
+		return -1;
+	}
 
-    public int addProduct(ProductModel productModel) {
-        try (Connection con = getConnection();
-             PreparedStatement st = con.prepareStatement("INSERT INTO computer (computer_name, price,  product_image) VALUES (?, ?,  ?)")) {
-            st.setString(1, productModel.getComputer_name());
-            st.setDouble(2, productModel.getPrice());
-            st.setString(3, productModel.getUserImageUrl());
-            int result = st.executeUpdate();
+	public int addProduct(ProductModel productModel) {
+		try (Connection con = getConnection();
+				PreparedStatement st = con.prepareStatement(
+						"INSERT INTO computer (computer_name, price,  product_image) VALUES (?, ?,  ?)")) {
+			st.setString(1, productModel.getComputer_name());
+			st.setDouble(2, productModel.getPrice());
+			st.setString(3, productModel.getUserImageUrl());
+			int result = st.executeUpdate();
 
-            if (result > 0) {
-                return 1; // Success
-            } else {
-                return 0; // No rows affected
-            }
-        } catch (ClassNotFoundException | SQLException ex) {
-            ex.printStackTrace();
-            return -1; // Error
-        }
-    }
+			if (result > 0) {
+				return 1; // Success
+			} else {
+				return 0; // No rows affected
+			}
+		} catch (ClassNotFoundException | SQLException ex) {
+			ex.printStackTrace();
+			return -1; // Error
+		}
+	}
 
-    public List<ProductModeldata> getAllProducts() {
-        List<ProductModeldata> products = new ArrayList<>();
-        try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement("SELECT * FROM computer");
-             ResultSet rs = stmt.executeQuery()) {
+	public ArrayList<ProductModeldata> getAllProducts() {
+	    try (Connection conn = getConnection();
+	            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM computer");
+	            ResultSet rs = stmt.executeQuery()) {
 
-            while (rs.next()) {
-                int productId = rs.getInt("computer_Id");
-                String productName = rs.getString("computer_name");
-                double price = rs.getDouble("price");
-                String imageUrl = rs.getString("user_image");
+	        ArrayList<ProductModeldata> prods = new ArrayList<>();
+	        while (rs.next()) {
+	            ProductModeldata prod = new ProductModeldata();
+	            prod.setProductId(rs.getInt("computer_Id"));
+	            prod.setProductName(rs.getString("computer_name"));
+	            prod.setPrice(rs.getDouble("price"));
+	            prod.setImageUrl(rs.getString("product_image"));
+	            prods.add(prod);
+	        }
 
-                ProductModeldata productModel = new ProductModeldata(productId, productName, price, imageUrl);
-                products.add(productModel);
-            }
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-            // Handle the exception appropriately, such as logging or throwing a custom exception
-        }
-        return products;
-    }
-
-        
-
-    
-
+	        return prods;
+	    } catch (SQLException | ClassNotFoundException e) {
+	        e.printStackTrace();
+	        // Handle the exception appropriately, such as logging or throwing a custom exception
+	    }
+	    return null;
+	}
 
 }

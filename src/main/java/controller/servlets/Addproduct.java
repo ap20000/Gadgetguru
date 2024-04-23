@@ -1,7 +1,7 @@
 package controller.servlets;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -21,33 +21,39 @@ import util.stringUtil;
  */
 @WebServlet("/Addproduct")
 @MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2, // 2MB
-maxFileSize = 1024 * 1024 * 10, // 10MB
-maxRequestSize = 1024 * 1024 * 50)
+		maxFileSize = 1024 * 1024 * 10, // 10MB
+		maxRequestSize = 1024 * 1024 * 50)
 public class Addproduct extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-	private GadgetDbController dbController;
-
-    public Addproduct() {
-        super();
-        this.dbController = new GadgetDbController();
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+	private GadgetDbController dbController;
+
+	public Addproduct() {
+		super();
+		this.dbController = new GadgetDbController();
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	        throws ServletException, IOException {
+	    System.out.println("1234");
+	    
+
 	    String computerName = request.getParameter("product_name");
 	    double price = 0.0; // Default value in case of null
 	    String priceParam = request.getParameter("product_price");
@@ -61,36 +67,38 @@ public class Addproduct extends HttpServlet {
 	    }
 
 	    Part product_image = request.getPart("product_image");
-	    System.out.println("image"+product_image);
+	    System.out.println("image" + product_image);
 	    if (product_image != null) {
 	        ProductModel productModel = new ProductModel(computerName, price, product_image);
 
 	        String savePath = stringUtil.IMAGE_DIR_SAVE_PATH;
 	        String fileName = productModel.getUserImageUrl();
 	        if (!fileName.isEmpty() && fileName != null)
-	        	product_image.write(savePath + fileName);
+	            product_image.write(savePath + fileName);
 
-	        System.out.println(productModel.getUserImageUrl());
 	        int result = dbController.addProduct(productModel);
 
 	        if (result > 0) {
 	            // Product added successfully, redirect to admin page
-	            response.sendRedirect("adminPage.jsp");
+	        	ArrayList<ProductModeldata> prods = dbController.getAllProducts();
+
+	    		// Set the products as an attribute in the request
+	    		request.setAttribute("products", prods);
+
+	    		// Forward the request to the JSP file for display
+	    		request.getRequestDispatcher("pages/Adminproduct.jsp").forward(request, response);
+
 	        } else {
 	            // Error adding product, handle accordingly
 	        }
-	        
-	        
+
 	    } else {
 	        // Handle the case when user_image is null
 	        System.out.println("user_image is null");
 	    }
-	   
-
-        
-	}
+	    
 
 	}
 
 
-
+}

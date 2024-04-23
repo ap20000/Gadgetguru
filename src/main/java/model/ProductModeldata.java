@@ -14,6 +14,9 @@ public class ProductModeldata {
         this.imageUrl = imageUrl;
     }
 
+    public ProductModeldata() {
+    }
+    
 	public int getProductId() {
 		return productId;
 	}

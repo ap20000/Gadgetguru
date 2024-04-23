@@ -35,18 +35,23 @@ public class LoginServlet extends HttpServlet {
         LoginResult loginResult = dbController.getUserLoginInfo(loginModel);
 
         if (loginResult.getStatus() == 1) {
-        	 HttpSession userSession = request.getSession();
-             userSession.setAttribute("user_name", username);
+        	 
             if ("admin".equals(loginResult.getRole())) {
-            	
+            	HttpSession userSession = request.getSession();
+                userSession.setAttribute("username", username);
+                userSession.setAttribute("id", userSession.getId());
+                userSession.setAttribute("loggedIn", true);
                 // User is admin, redirect to admin dashboard
                 response.sendRedirect(request.getContextPath() +"/pages/Dashboard.jsp");
             } else {
 
+            	HttpSession userSession = request.getSession();
+                userSession.setAttribute("username", username);
+                userSession.setAttribute("id", userSession.getId());
                 // Redirect to home page
-                response.sendRedirect(request.getContextPath() + "/pages/welcome.jsp");
+                response.sendRedirect(request.getContextPath() + "/pages/header.jsp");
                 // User is not admin, redirect to home page
-                response.sendRedirect(request.getContextPath() +"/pages/welcome.jsp");
+                response.sendRedirect(request.getContextPath() +"/pages/header.jsp");
             }
         } else {
             // Login failed, redirect to login page with error message
