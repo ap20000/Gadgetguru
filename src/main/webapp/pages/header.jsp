@@ -32,29 +32,31 @@
                         <input type="text" placeholder="Search...">
                         <button type="submit"><i class="fa fa-search"></i></button>
                         <div class="login-wrapper">
-                            <a href="/pages/login.jsp" class="login-btn"><i class="fas fa-user"></i></a>
-                            <span>Login</span>
+                            <li>
+		                <form action="<%
+		                    // Conditionally set the action URL based on user session
+		                    if (currentUser != null) {
+		                        out.print(contextPath + "/LogOutServlet");
+		                    } else {
+		                        out.print(contextPath + "/pages/login.jsp");
+		                    }
+		                %>" method="post">
+		                    <input type="submit" value="<%
+		                        // Conditionally set the button label based on user session
+		                        if (currentUser != null) {
+		                            out.print("Logout");
+		                        } else {
+		                            out.print("Login");
+		                        }
+		                    %>"/>
+		                </form>
+		            </li>
+                            
                         </div>
                     </div>
                 </li>
                 <li>
-                <form action="<%
-                    // Conditionally set the action URL based on user session
-                    if (currentUser != null) {
-                        out.print(contextPath + "/LogOutServlet");
-                    } else {
-                        out.print(contextPath + "/pages/login.jsp");
-                    }
-                %>" method="post">
-                    <input type="submit" value="<%
-                        // Conditionally set the button label based on user session
-                        if (currentUser != null) {
-                            out.print("Logout");
-                        } else {
-                            out.print("Login");
-                        }
-                    %>"/>
-                </form>
+                
             </li>
                 
             </ul>            

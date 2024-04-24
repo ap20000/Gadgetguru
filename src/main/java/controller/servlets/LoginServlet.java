@@ -33,6 +33,7 @@ public class LoginServlet extends HttpServlet {
 
 
         LoginResult loginResult = dbController.getUserLoginInfo(loginModel);
+        System.out.print(loginResult);
 
         if (loginResult.getStatus() == 1) {
         	 
@@ -49,9 +50,9 @@ public class LoginServlet extends HttpServlet {
                 userSession.setAttribute("username", username);
                 userSession.setAttribute("id", userSession.getId());
                 // Redirect to home page
-                response.sendRedirect(request.getContextPath() + "/pages/header.jsp");
+                response.sendRedirect(request.getContextPath() + "/pages/welcome.jsp");
                 // User is not admin, redirect to home page
-                response.sendRedirect(request.getContextPath() +"/pages/header.jsp");
+               
             }
         } else {
             // Login failed, redirect to login page with error message
