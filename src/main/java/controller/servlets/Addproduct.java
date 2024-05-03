@@ -42,7 +42,13 @@ public class Addproduct extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+		ArrayList<ProductModeldata> prods = dbController.getAllProducts();
+
+		// Set the products as an attribute in the request
+		request.setAttribute("products", prods);
+
+		// Forward the request to the JSP file for display
+		request.getRequestDispatcher("/pages/Adminproduct.jsp").forward(request, response);
 	}
 
 	/**
@@ -86,7 +92,7 @@ public class Addproduct extends HttpServlet {
 	    		request.setAttribute("products", prods);
 
 	    		// Forward the request to the JSP file for display
-	    		request.getRequestDispatcher("pages/Adminproduct.jsp").forward(request, response);
+	    		request.getRequestDispatcher("/pages/Adminproduct.jsp").forward(request, response);
 
 	        } else {
 	            // Error adding product, handle accordingly

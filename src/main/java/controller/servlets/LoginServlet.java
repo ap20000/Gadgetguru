@@ -30,16 +30,20 @@ public class LoginServlet extends HttpServlet {
         UserLoginModel loginModel = new UserLoginModel(username, password);
         loginModel.setUser_name(username);
         loginModel.setPassword(password);
+        System.out.println("Username" + username);
+        System.out.println("password"+  password);
 
 
         LoginResult loginResult = dbController.getUserLoginInfo(loginModel);
-        System.out.print(loginResult);
+        System.out.print("aaaa"+loginResult.getStatus());
 
         if (loginResult.getStatus() == 1) {
-        	 
+        	
+        	System.out.print("aaaa");
             if ("admin".equals(loginResult.getRole())) {
             	HttpSession userSession = request.getSession();
                 userSession.setAttribute("username", username);
+                userSession.setAttribute("role", "admin");
                 userSession.setAttribute("id", userSession.getId());
                 userSession.setAttribute("loggedIn", true);
                 // User is admin, redirect to admin dashboard
@@ -50,7 +54,9 @@ public class LoginServlet extends HttpServlet {
                 userSession.setAttribute("username", username);
                 userSession.setAttribute("id", userSession.getId());
                 // Redirect to home page
-                response.sendRedirect(request.getContextPath() + "/pages/welcome.jsp");
+                userSession.setAttribute("loggedIn", true);
+
+                response.sendRedirect(request.getContextPath() + "/pages/landingpage.jsp");
                 // User is not admin, redirect to home page
                
             }

@@ -5,11 +5,11 @@ import java.io.File;
 public class stringUtil {
 
 	public static final String INSERT_User = "INSERT INTO user "
-	        + "(user_name, full_name, email, phone_number, dob, address, password, gender,user_image,role)"
+	        + "(user_Name, full_Name, email, phone_Number, dob, address, password, gender,user_image,role)"
 	        + " VALUES (?, ?, ?, ?, ?, ?, ?, ?,?,?)";
 	 public static final String INSERT_Product = "INSERT INTO computer (computer_name, price, brand, product_image) VALUES (?, ?, ?, ?)";
 
-	public static final String GET_LOGIN_STUDENT_INFO = "SELECT * FROM user WHERE user_name = ?";
+	public static final String GET_LOGIN_STUDENT_INFO = "SELECT * FROM user WHERE user_Name = ?";
 	
 	
 	
@@ -27,6 +27,7 @@ public class stringUtil {
     public static final String password = "password";
     public static final String confirm_password = "confirmpassword";
     public static final String gender = "gender";
+    public static final String role = "role";
    
  // Start: Validation Messages
  		// Register Page Messages
@@ -57,13 +58,14 @@ public class stringUtil {
 	public static final String PAGE_URL_FOOTER = "pages/footer.jsp";
 	public static final String PAGE_URL_HEADER = "pages/header.jsp";
 	public static final String URL_LOGIN = "/login.jsp";
-	public static final String URL_INDEX = "/index.jsp";
+	public static final String URL_INDEX = "/landingpage.jsp";
+	public static final String PAGE_URL_DASHBOARD = "/pages/Dashboard.jsp";
 	// End: JSP Route
 
 	// Start: Servlet Route
-	public static final String SERVLET_URL_LOGIN = "/login";
-	public static final String SERVLET_URL_REGISTER = "/registerstudent";
-	public static final String SERVLET_URL_LOGOUT = "/logout";
+	public static final String SERVLET_URL_LOGIN = "/LoginServlet";
+	public static final String SERVLET_URL_REGISTER = "/RegisterServlet";
+	public static final String SERVLET_URL_LOGOUT = "/LogoutServlet";
 	// End: Servlet Route
 	
 	public static final String USER = "user";

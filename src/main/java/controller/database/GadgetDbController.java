@@ -61,7 +61,7 @@ public class GadgetDbController {
 
 	public boolean isUsernameExists(String username) {
 		try (Connection con = getConnection();
-				PreparedStatement st = con.prepareStatement("SELECT COUNT(*) FROM user WHERE user_name = ?")) {
+				PreparedStatement st = con.prepareStatement("SELECT COUNT(*) FROM user WHERE user_Name = ?")) {
 			st.setString(1, username);
 			try (ResultSet rs = st.executeQuery()) {
 				if (rs.next()) {
@@ -93,7 +93,7 @@ public class GadgetDbController {
 
 	public boolean isPhoneNumberExists(String phoneNumber) {
 		try (Connection con = getConnection();
-				PreparedStatement st = con.prepareStatement("SELECT COUNT(*) FROM user WHERE phone_number = ?")) {
+				PreparedStatement st = con.prepareStatement("SELECT COUNT(*) FROM user WHERE phone_Number = ?")) {
 			st.setString(1, phoneNumber);
 			try (ResultSet rs = st.executeQuery()) {
 				if (rs.next()) {
@@ -209,7 +209,7 @@ public class GadgetDbController {
 
 	public int updateUserPassword(String username, String newPassword) {
 		try (Connection con = getConnection();
-				PreparedStatement st = con.prepareStatement("UPDATE user SET password = ? WHERE user_name = ?")) {
+				PreparedStatement st = con.prepareStatement("UPDATE user SET password = ? WHERE user_Name = ?")) {
 			st.setString(1, PasswordEncryptionWithAes.encrypt(username, newPassword));
 			st.setString(2, username);
 
@@ -242,9 +242,22 @@ public class GadgetDbController {
 		}
 	}
 
+	public int deletegadgetguru(int deleteId) {
+        try (Connection con = getConnection(); 
+             PreparedStatement st = con.prepareStatement("DELETE FROM computer WHERE computer_Id = ?")) {
+            st.setInt(1, deleteId);
+            
+            return st.executeUpdate();
+
+        } catch (ClassNotFoundException | SQLException ex) {
+            ex.printStackTrace();
+            return -1; // Error
+        }
+    }
+
 	public int isAdmin(String username) {
 		try (Connection con = getConnection();
-				PreparedStatement st = con.prepareStatement("SELECT role FROM user WHERE user_name = ?")) {
+				PreparedStatement st = con.prepareStatement("SELECT role FROM user WHERE user_Name = ?")) {
 			st.setString(1, username);
 			ResultSet rs = st.executeQuery();
 			if (rs.next()) {
@@ -309,5 +322,28 @@ public class GadgetDbController {
 	    }
 	    return null;
 	}
+	public int updateAccessories(ProductModeldata accessories) {
+        try (Connection con = getConnection();
+             PreparedStatement rs = con.prepareStatement("UPDATE computer SET computer_name = ?, price = ? WHERE computer_Id = ?")) {
+        	rs.setString(1, accessories.getProductName());
+            rs.setDouble(2, accessories.getPrice());
+          
+            rs.setInt(3, accessories.getProductId());
+
+
+            int result = rs.executeUpdate();
+
+            if (result > 0) {
+                System.out.println("Database updated successfully");
+                return 1; // Success
+            } else {
+                System.out.println("No rows affected, database not updated");
+                return 0; // No rows affected
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return -1; // Error
+        }
+    }
 
 }
