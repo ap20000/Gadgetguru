@@ -28,11 +28,24 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
 
         UserLoginModel loginModel = new UserLoginModel(username, password);
-        loginModel.setUser_name(username);
+        loginModel.setUser_Name(username);
         loginModel.setPassword(password);
         System.out.println("Username" + username);
         System.out.println("password"+  password);
 
+        if (username.length() < 6) {
+            String errorMessage = "Invalid User name. Please enter more than 6 characters";
+            request.setAttribute(stringUtil.MESSAGE_ERROR, errorMessage);
+            request.getRequestDispatcher(stringUtil.PAGE_URL_REGISTER).forward(request, response);
+            return;
+        }
+
+        if (!username.matches("^[a-zA-Z0-9]{6,}$")) {
+            String errorMessage = "Invalid User name. Please don't enter symbols.";
+            request.setAttribute(stringUtil.MESSAGE_ERROR, errorMessage);
+            request.getRequestDispatcher(stringUtil.PAGE_URL_REGISTER).forward(request, response);
+            return;
+        }
 
         LoginResult loginResult = dbController.getUserLoginInfo(loginModel);
         System.out.print("aaaa"+loginResult.getStatus());
@@ -60,7 +73,12 @@ public class LoginServlet extends HttpServlet {
                 // User is not admin, redirect to home page
                
             }
-        } else {
+        }else if (loginResult.getStatus() == -1) {
+            // Username not found, redirect to register page
+            String errorMessage = "Username not found. Please register.";
+            request.setAttribute(stringUtil.MESSAGE_ERROR, errorMessage);
+            request.getRequestDispatcher(stringUtil.PAGE_URL_REGISTER).forward(request, response);
+        }  else {
             // Login failed, redirect to login page with error message
             response.sendRedirect(request.getContextPath() +"login.jsp?error=1");
         }

@@ -1,0 +1,66 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #fff;
+}
+
+.profile {
+  max-width: 400px;
+   margin: 50px auto 0; 
+  padding: 20px;
+  background-color: #a9a9a92b;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.profile h2 {
+  margin-bottom: 20px;
+  text-align: center;
+}
+.profile label {
+  font-weight: bold;
+}
+.profile-image img {
+  display: block;
+  margin: 0 auto 20px; /* Center the image and add some margin at the bottom */
+  width: 150px; /* Set the width of the image */
+  height: 150px; /* Set the height of the image */
+  border-radius: 50%; /* Make the image round */
+  object-fit: cover; /* Cover the entire area of the container */
+  object-position: center; /* Center the image within the container */
+}
+
+.profile-info {
+  margin-bottom: 20px;
+  
+}
+.profile-info label {
+  display: inline-block;
+  width: 100px;
+}
+.profile-info p {
+  display: inline-block;
+  margin: 0;
+}
+/* Form input hover */
+input[type="text"]:hover,
+input[type="email"]:hover {
+  border-color: #ff0000; /* Change border color on hover */
+}
+.update-button {
+  text-align: center;
+  
+  margin: 40px;
+}
+/* Button hover */
+.update-button a {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #B3C8CF;
+  color: #fff;
+  border-radius: 3px;
+  text-decoration: none;
+}
+.update-button a:hover {
+  background-color: #ff0000; /* Change background color on hover */
+}

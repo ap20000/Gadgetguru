@@ -61,6 +61,13 @@ public class Addproduct extends HttpServlet {
 	    
 
 	    String computerName = request.getParameter("product_name");
+	    if (!computerName.matches("^[a-zA-Z\\s]+$")) {
+	        // Computer name contains numbers or symbols, handle the error
+	        String errorMessage = "Invalid product name. Product name should only contain letters and spaces.";
+	        request.setAttribute(stringUtil.MESSAGE_ERROR, errorMessage);
+	        request.getRequestDispatcher(stringUtil.PAGE_URL_REGISTER).forward(request, response);
+	        return;
+	    }
 	    double price = 0.0; // Default value in case of null
 	    String priceParam = request.getParameter("product_price");
 	    if (priceParam != null && !priceParam.trim().isEmpty()) {
@@ -68,8 +75,16 @@ public class Addproduct extends HttpServlet {
 	            price = Double.parseDouble(priceParam);
 	        } catch (NumberFormatException e) {
 	            // Handle parsing error
-	            e.printStackTrace();
+	            String errorMessage = "Invalid price. Price should be a number.";
+	            request.setAttribute(stringUtil.MESSAGE_ERROR, errorMessage);
+	            request.getRequestDispatcher(stringUtil.PAGE_URL_REGISTER).forward(request, response);
+	            return;
 	        }
+	    } else {
+	        String errorMessage = "Price is required.";
+	        request.setAttribute(stringUtil.MESSAGE_ERROR, errorMessage);
+	        request.getRequestDispatcher(stringUtil.PAGE_URL_REGISTER).forward(request, response);
+	        return;
 	    }
 
 	    Part product_image = request.getPart("product_image");

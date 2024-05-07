@@ -1,7 +1,7 @@
 package model;
 
 public class UserLoginModel {
-	private String user_name;
+	private String user_Name;
 	private String password;
 	
 	
@@ -10,20 +10,23 @@ public class UserLoginModel {
 	
 	public UserLoginModel(String user_name, String password) {
 		super();
-		this.user_name = user_name;
+		this.user_Name = user_name;
 		this.password = password;
 	}
 
 
 
-	public String getUser_name() {
-		return user_name;
+	
+
+
+	public String getUser_Name() {
+		return user_Name;
 	}
 
 
 
-	public void setUser_name(String user_name) {
-		this.user_name = user_name;
+	public void setUser_Name(String user_Name) {
+		this.user_Name = user_Name;
 	}
 
 

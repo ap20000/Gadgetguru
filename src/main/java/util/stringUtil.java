@@ -5,7 +5,7 @@ import java.io.File;
 public class stringUtil {
 
 	public static final String INSERT_User = "INSERT INTO user "
-	        + "(user_Name, full_Name, email, phone_Number, dob, address, password, gender,user_image,role)"
+	        + "(user_Name, full_Name, email, phone_Number, dob, address, password, gender,user_Image,role)"
 	        + " VALUES (?, ?, ?, ?, ?, ?, ?, ?,?,?)";
 	 public static final String INSERT_Product = "INSERT INTO computer (computer_name, price, brand, product_image) VALUES (?, ?, ?, ?)";
 

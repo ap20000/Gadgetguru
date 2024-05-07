@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import controller.database.GadgetDbController;
-import model.UserModel;
+import model.AccessoriesUserModel;
 import util.stringUtil;
 
 @WebServlet(urlPatterns = "/RegisterServlet")
@@ -42,11 +42,53 @@ public class RegisterServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String user_name = request.getParameter(stringUtil.user_name);
-		System.out.println("username"+user_name);
-		String full_name = request.getParameter(stringUtil.full_name);
+		String user_Name = request.getParameter(stringUtil.user_name);
+		if (user_Name.length() < 6) {
+            String errorMessage = "Invalid User name. Please enter more than 6 characters";
+            request.setAttribute(stringUtil.MESSAGE_ERROR, errorMessage);
+            request.getRequestDispatcher(stringUtil.PAGE_URL_REGISTER).forward(request, response);
+            return;
+        }
+
+        if (!user_Name.matches("^[a-zA-Z0-9]{6,}$")) {
+            String errorMessage = "Invalid User name. Please don't enter symbols.";
+            request.setAttribute(stringUtil.MESSAGE_ERROR, errorMessage);
+            request.getRequestDispatcher(stringUtil.PAGE_URL_REGISTER).forward(request, response);
+            return;
+        }
+        if (dbController.isUsernameExists(user_Name)) {
+            String errorMessage = "Username already exists. Please choose a different username.";
+            request.setAttribute(stringUtil.MESSAGE_ERROR, errorMessage);
+            request.getRequestDispatcher(stringUtil.PAGE_URL_REGISTER).forward(request, response);
+            return;
+        }
+		System.out.println("username"+user_Name);
+		String full_Name = request.getParameter(stringUtil.full_name);
+		if (!isValidName(full_Name)) {
+            String errorMessage = "Invalid Full name. Please don't enter symbols and numerical value.";
+            request.setAttribute(stringUtil.MESSAGE_ERROR, errorMessage);
+            request.getRequestDispatcher(stringUtil.PAGE_URL_REGISTER).forward(request, response);
+            return;
+        }
 		String email = request.getParameter(stringUtil.email);
-		String phone_number = request.getParameter(stringUtil.phone_number);
+		if (dbController.isEmailExists(email)) {
+            String errorMessage = "Email already exists. Please use a different email address.";
+            request.setAttribute(stringUtil.MESSAGE_ERROR, errorMessage);
+            request.getRequestDispatcher(stringUtil.PAGE_URL_REGISTER).forward(request, response);
+            return;
+        }
+		String phone_Number = request.getParameter(stringUtil.phone_number);
+		if (phone_Number.length() != 10) {
+            request.setAttribute(stringUtil.MESSAGE_ERROR, "Invalid number. Phone Number must be of 10 characters.");
+            request.getRequestDispatcher(stringUtil.PAGE_URL_REGISTER).forward(request, response);
+            return;
+        }
+		if (dbController.isPhoneNumberExists(phone_Number)) {
+            String errorMessage = "Phone number already exists. Please use a different phone number.";
+            request.setAttribute(stringUtil.MESSAGE_ERROR, errorMessage);
+            request.getRequestDispatcher(stringUtil.PAGE_URL_REGISTER).forward(request, response);
+            return;
+        }
 		String dobString = request.getParameter(stringUtil.dobString);
 		
 	     // Initialize dob variable
@@ -72,13 +114,44 @@ public class RegisterServlet extends HttpServlet {
 	            response.sendRedirect(request.getContextPath() + "/pages/register.html?error=invalid_date_format");
 	            return; // Exit the method to prevent further processing
 	        }
+	        if (dob.isAfter(LocalDate.now())) {
+	            request.setAttribute(stringUtil.MESSAGE_ERROR, "Invalid birthday date.");
+	            request.getRequestDispatcher(stringUtil.PAGE_URL_REGISTER).forward(request, response);
+	            return;
+	        }
 		String address = request.getParameter(stringUtil.address);
 		String password = request.getParameter(stringUtil.password);
+		if (!password.matches("^(?=.*[a-z])(?=.*\\d).{5,}$")) {
+            request.setAttribute(stringUtil.MESSAGE_ERROR,
+                    "Invalid password. Password must contain at least one lowercase letter and one digit.");
+            request.getRequestDispatcher(stringUtil.PAGE_URL_REGISTER).forward(request, response);
+            return;
+        }
+
+
+        if (password.length() <= 6) {
+            String errorMessage = "Invalid Password. Please enter more than 6 characters";
+            request.setAttribute(stringUtil.MESSAGE_ERROR, errorMessage);
+            request.getRequestDispatcher(stringUtil.PAGE_URL_REGISTER).forward(request, response);
+            return;
+        }
 		String gender = request.getParameter(stringUtil.gender);
 
 		Part user_image = request.getPart("user_image");
+	
+        String confirmPassword = request.getParameter("confirmpassword");
+        if (!password.equals(confirmPassword)) { 
+            String errorMessage = "Password and Confirm Password do not match.";
+         request.setAttribute(stringUtil.MESSAGE_ERROR, errorMessage);
+         request.getRequestDispatcher(stringUtil.PAGE_URL_REGISTER).forward(request,
+         response); return; }
+         
+        
+        
+  
+        
 
-		UserModel user = new UserModel(user_name, full_name, email, phone_number, dob, address, password, gender,
+		AccessoriesUserModel user = new AccessoriesUserModel(user_Name, full_Name, email, phone_Number, dob, address, password, gender,
 				user_image,
 				"user");
 
@@ -105,6 +178,7 @@ public class RegisterServlet extends HttpServlet {
 
 	}
 
+	
 	private boolean isValidName(String name) {
 		for (char c : name.toCharArray()) {
 			if (!Character.isLetter(c) && c != ' ') {

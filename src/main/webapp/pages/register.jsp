@@ -10,6 +10,11 @@
 </head>
 <body>
     <div class="container">
+    <% String error = (String) request.getAttribute(stringUtil.MESSAGE_ERROR); %>
+		        <% if (error != null && !error.isEmpty()) { %>
+		           <div style="color: red;"><%= error %></div>
+		     	 <% }
+	     	%>
         <header>Registration Form</header>
         <form action="/GadgetGuru_Accessories/RegisterServlet" method="POST" enctype="multipart/form-data">
             <div class="input-box">
