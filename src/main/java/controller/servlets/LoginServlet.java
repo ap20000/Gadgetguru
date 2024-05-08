@@ -33,19 +33,19 @@ public class LoginServlet extends HttpServlet {
         System.out.println("Username" + username);
         System.out.println("password"+  password);
 
-//        if (username.length() < 6) {
-//            String errorMessage = "Invalid User name. Please enter more than 6 characters";
-//            request.setAttribute(stringUtil.MESSAGE_ERROR, errorMessage);
-//            request.getRequestDispatcher(stringUtil.PAGE_URL_REGISTER).forward(request, response);
-//            return;
-//        }
-//
-//        if (!username.matches("^[a-zA-Z0-9]{6,}$")) {
-//            String errorMessage = "Invalid User name. Please don't enter symbols.";
-//            request.setAttribute(stringUtil.MESSAGE_ERROR, errorMessage);
-//            request.getRequestDispatcher(stringUtil.PAGE_URL_REGISTER).forward(request, response);
-//            return;
-//        }
+        if (username.length() < 6) {
+   
+            request.setAttribute("errorMessage",stringUtil.MESSAGE_ERROR );
+            request.getRequestDispatcher(stringUtil.URL_PAGE_LOGIN).forward(request, response);
+            return;
+        }
+
+        if (!username.matches("^[a-zA-Z0-9]{6,}$")) {
+
+            request.setAttribute( "errorMessage",stringUtil.MESSAGE_ERROR_USERNAME_INVALIDL);
+            request.getRequestDispatcher(stringUtil.URL_PAGE_LOGIN).forward(request, response);
+            return;
+        }
 
         LoginResult loginResult = dbController.getUserInfo(loginModel);
         System.out.print("aaaa"+loginResult.getStatus());
@@ -60,7 +60,7 @@ public class LoginServlet extends HttpServlet {
                 userSession.setAttribute("id", userSession.getId());
                 userSession.setAttribute("loggedIn", true);
                 // User is admin, redirect to admin dashboard
-                response.sendRedirect(request.getContextPath() +"/pages/Dashboard.jsp");
+                response.sendRedirect(request.getContextPath() +stringUtil.PAGE_URL_DASHBOARD);
             } else {
 
             	HttpSession userSession = request.getSession();
@@ -69,18 +69,26 @@ public class LoginServlet extends HttpServlet {
                 // Redirect to home page
                 userSession.setAttribute("loggedIn", true);
 
-                response.sendRedirect(request.getContextPath() + "/pages/home.jsp");
+                response.sendRedirect(request.getContextPath() +stringUtil.URL_PAGE_HOME);
                 // User is not admin, redirect to home page
                
             }
-        }else if (loginResult.getStatus() == -1) {
+        }else if (loginResult.getStatus() == 0) {
             // Username not found, redirect to register page
-            String errorMessage = "Username not found. Please register.";
-            request.setAttribute(stringUtil.MESSAGE_ERROR, errorMessage);
-//            request.getRequestDispatcher(stringUtil.PAGE_URL_REGISTER).forward(request, response);
-        }  else {
+
+            request.setAttribute(stringUtil.MESSAGE_ERROR_CREATE_ACCOUNT, "errorMessage");
+            request.getRequestDispatcher(stringUtil.URL_PAGE_REGISTER).forward(request, response);
+        }
+        else if (loginResult.getStatus() == -1) {
+            // SERVER not found, redirect to register page
+
+            request.setAttribute(stringUtil.MESSAGE_ERROR_SERVER, "errorMessage");
+            request.getRequestDispatcher(stringUtil.URL_PAGE_LOGIN).forward(request, response);
+        } 
+        else {
             // Login failed, redirect to login page with error message
-            response.sendRedirect(request.getContextPath() +"login.jsp?error=1");
+        	request.setAttribute(stringUtil.MESSAGE_ERROR_LOGIN, "errorMessage");
+            request.getRequestDispatcher(stringUtil.URL_PAGE_LOGIN).forward(request, response);
         }
     }
 }

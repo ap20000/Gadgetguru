@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ page import="util.stringUtil" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,15 +16,15 @@
       <form action="/GadgetGuru_Accessories/ForgetPassword" method="POST" >
         <div class="input-icon">
           <i class="fas fa-user"></i>
-          <input type="text" id="user_Name" name="user_Name" placeholder="Enter your username">
+          <input type="text" id="username" name="<%=stringUtil.user_Name %>" placeholder="Enter your username">
         </div>
         <div class="input-icon">
           <i class="fas fa-lock"></i>
-          <input type="password" id="new_Password" name="new_Password" placeholder="Enter your new password">
+          <input type="password" id="confirmpassword" name="<%=stringUtil.confirm_password %>" placeholder="Enter your new password">
         </div>
         <div class="input-icon">
           <i class="fas fa-lock"></i>
-          <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Enter confirm password">
+          <input type="password" id="confirmnewpassword" name="<%=stringUtil.confirm_new_password %>" placeholder="Enter confirm password">
         </div>
         <button type="submit">Submit</button>
       </form>

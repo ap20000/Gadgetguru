@@ -36,7 +36,7 @@ public class GadgetDbController {
 
 	public boolean UsernameExists(String user_Name) {
 		try (Connection con = getConnection();
-				PreparedStatement st = con.prepareStatement("SELECT COUNT(*) FROM user WHERE user_Name = ?")) {
+				PreparedStatement st = con.prepareStatement(	stringUtil.GET_USER_USERNAME_INFO)) {
 			st.setString(1, user_Name);
 			try (ResultSet rs = st.executeQuery()) {
 				if (rs.next()) {
@@ -52,7 +52,7 @@ public class GadgetDbController {
 
 	public boolean EmailExists(String user_email) {
 		try (Connection con = getConnection();
-				PreparedStatement st = con.prepareStatement("SELECT COUNT(*) FROM user WHERE email = ?")) {
+				PreparedStatement st = con.prepareStatement(stringUtil.GET_USER_EMAIL_INFO)) {
 			st.setString(1, user_email);
 			try (ResultSet rs = st.executeQuery()) {
 				if (rs.next()) {
@@ -68,7 +68,7 @@ public class GadgetDbController {
 
 	public boolean PhoneNumberExists(String phone_Number) {
 		try (Connection con = getConnection();
-				PreparedStatement st = con.prepareStatement("SELECT COUNT(*) FROM user WHERE phone_Number = ?")) {
+				PreparedStatement st = con.prepareStatement(stringUtil.GET_USER_PHONE_INFO)) {
 			st.setString(1, phone_Number);
 			try (ResultSet rs = st.executeQuery()) {
 				if (rs.next()) {
@@ -83,7 +83,7 @@ public class GadgetDbController {
 	}
 
 	public int AddUserNew(AccessoriesUserModel userModel) {
-		try (Connection con = getConnection(); PreparedStatement st = con.prepareStatement(stringUtil.INSERT_User)) {
+		try (Connection con = getConnection(); PreparedStatement st = con.prepareStatement(stringUtil.INSERT_NEW_User)) {
 			st.setString(1, userModel.getUser_Name());
 			st.setString(2, userModel.getFull_Name());
 			st.setString(3, userModel.getEmail());
@@ -144,7 +144,7 @@ public class GadgetDbController {
 
 	public LoginResult getUserInfo(UserLoginModel accessoriesLogin) {
 		try (Connection con = getConnection()) {
-			PreparedStatement st = con.prepareStatement(stringUtil.GET_LOGIN_STUDENT_INFO);
+			PreparedStatement st = con.prepareStatement(stringUtil.GET_LOGIN_USER_INFO);
 
 			// Set the username in the first parameter of the prepared statement
 			st.setString(1, accessoriesLogin.getUser_Name());
@@ -184,7 +184,7 @@ public class GadgetDbController {
 
 	public AccessoriesUserModel getuserprofile(String username) {
         try (Connection con = getConnection()) {
-            PreparedStatement st = con.prepareStatement("SELECT * FROM user WHERE user_Name = ?");
+            PreparedStatement st = con.prepareStatement(stringUtil.GET_LOGIN_USER_INFO);
             st.setString(1, username);
             ResultSet rs = st.executeQuery();
 
@@ -210,7 +210,7 @@ public class GadgetDbController {
     }
 	 public int Profileupdate(AccessoriesUserModel accessoriesuser) {
 	        try (Connection con = getConnection();
-	             PreparedStatement st = con.prepareStatement("UPDATE user SET full_Name=?, email=?, phone_Number=?, address=? WHERE user_Name=?")) {                 
+	             PreparedStatement st = con.prepareStatement(stringUtil.UPDATE_PROFILE_USER_INFO)) {                 
 	            st.setString(1, accessoriesuser.getFull_Name());
 	            st.setString(2, accessoriesuser.getEmail());
 	            st.setString(3, accessoriesuser.getPhone_Number());
@@ -225,7 +225,7 @@ public class GadgetDbController {
 	    }
 	public int updateUseraccessoriesPassword(String username, String newPassword) {
 		try (Connection con = getConnection();
-				PreparedStatement st = con.prepareStatement("UPDATE user SET password = ? WHERE user_Name = ?")) {
+				PreparedStatement st = con.prepareStatement(stringUtil.UPDATE_USER_PASSWORD_INFO)) {
 			st.setString(1, PasswordEncryptionWithAes.encrypt(username, newPassword));
 			st.setString(2, username);
 
@@ -260,7 +260,7 @@ public class GadgetDbController {
 
 	public int deletegadgetguru(int accessoriesId) {
         try (Connection con = getConnection(); 
-             PreparedStatement st = con.prepareStatement("DELETE FROM computer WHERE computer_Id = ?")) {
+             PreparedStatement st = con.prepareStatement(stringUtil.DELETE_PRODUCT_INFO)) {
             st.setInt(1, accessoriesId);
             
             return st.executeUpdate();
@@ -298,8 +298,8 @@ public class GadgetDbController {
 
 	public int AddProductAccessories(ProductModel accessoriesModel) {
 		try (Connection con = getConnection();
-				PreparedStatement st = con.prepareStatement(
-						"INSERT INTO computer (computer_name, price,  product_image) VALUES (?, ?,  ?)")) {
+				PreparedStatement st = con.prepareStatement(stringUtil.INSERT_PRODUCT_INFO
+						)) {
 			st.setString(1, accessoriesModel.getComputer_name());
 			st.setDouble(2, accessoriesModel.getPrice());
 			st.setString(3, accessoriesModel.getUserImageUrl());
@@ -318,7 +318,7 @@ public class GadgetDbController {
 
 	public ArrayList<ProductModeldata> getAllAccessories() {
 	    try (Connection conn = getConnection();
-	            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM computer");
+	            PreparedStatement stmt = conn.prepareStatement(stringUtil.GET_ALLPRODUCT_INFO);
 	            ResultSet rs = stmt.executeQuery()) {
 
 	        ArrayList<ProductModeldata> prods = new ArrayList<>();
@@ -340,7 +340,7 @@ public class GadgetDbController {
 	}
 	public int updateAccessories(ProductModeldata accessories) {
         try (Connection con = getConnection();
-             PreparedStatement rs = con.prepareStatement("UPDATE computer SET computer_name = ?, price = ? WHERE computer_Id = ?")) {
+             PreparedStatement rs = con.prepareStatement(stringUtil.UPDATE_ALLPRODUCT_INFO)) {
         	rs.setString(1, accessories.getProductName());
             rs.setDouble(2, accessories.getPrice());
           

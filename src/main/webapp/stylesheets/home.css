@@ -88,29 +88,10 @@ a,
 img,
 span,
 input,
-button,
+
 ion-icon { display: block; }
 
-input,
-button {
-  background: none;
-  border: none;
-  font: inherit;
-}
 
-button {
-  text-align: left;
-  cursor: pointer;
-}
-
-input {
-  width: 100%;
-  outline-color: var(--middle-blue-green);
-}
-
-img { height: auto; }
-
-ion-icon { pointer-events: none; }
 
 html {
   font-family: var(--ff-jost);
@@ -130,7 +111,24 @@ body {
 /*-----------------------------------*\
  * #REUSED STYLE
 \*-----------------------------------*/
+/*-----------------------------------*\
+ * #REUSED STYLE
+\*-----------------------------------*/
 
+.btn {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+}
 
 
 
@@ -154,25 +152,19 @@ body {
   align-items: center;
 }
 
-.hero .container { width: 100%; 
- text-align: left; }
+.hero .container { width: 100%; }
 
 .hero-subtitle {
   color: var(--eerie-black);
-  font-size: 50px;
+  font-size: var(--fs-4);
   font-weight: var(--fw-600);
-  margin-bottom: 20px; 
+  margin-bottom: 20px;
 }
 
 .hero-title {
   margin-bottom: 35px;
-  max-width: 12px;
-  font-size: 20px;
-  margin-bottom: 20px; /* Adjust the margin as needed */
-  margin-left: 10px; /* Add a small margin to the left of the title */
-  white-space: nowrap; /* Prevent the title from wrapping */
+  max-width: 12ch;
 }
-
 
 
 

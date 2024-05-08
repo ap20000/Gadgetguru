@@ -63,8 +63,8 @@ public class Addproduct extends HttpServlet {
 	    String computerName = request.getParameter("product_name");
 	    if (!computerName.matches("^[a-zA-Z\\s]+$")) {
 	        // Computer name contains numbers or symbols, handle the error
-	        String errorMessage = "Invalid product name. Product name should only contain letters and spaces.";
-	        request.setAttribute(stringUtil.MESSAGE_ERROR, errorMessage);
+
+	        request.setAttribute("errorMessage",stringUtil.MESSAGE_COMPUTERNAME_INVALID );
 	        request.getRequestDispatcher(stringUtil.URL_PAGE_REGISTER).forward(request, response);
 	        return;
 	    }
@@ -75,14 +75,14 @@ public class Addproduct extends HttpServlet {
 	            price = Double.parseDouble(priceParam);
 	        } catch (NumberFormatException e) {
 	            // Handle parsing error
-	            String errorMessage = "Invalid price. Price should be a number.";
-	            request.setAttribute(stringUtil.MESSAGE_ERROR, errorMessage);
+	         
+	            request.setAttribute("errorMessage",stringUtil.MESSAGE_PRICE_INVALID );
 	            request.getRequestDispatcher(stringUtil.URL_PAGE_REGISTER).forward(request, response);
 	            return;
 	        }
 	    } else {
-	        String errorMessage = "Price is required.";
-	        request.setAttribute(stringUtil.MESSAGE_ERROR, errorMessage);
+	       
+	        request.setAttribute("errorMessage",stringUtil.MESSAGE_PRICE );
 	        request.getRequestDispatcher(stringUtil.URL_PAGE_REGISTER).forward(request, response);
 	        return;
 	    }
@@ -106,10 +106,15 @@ public class Addproduct extends HttpServlet {
 	    		// Set the products as an attribute in the request
 	    		request.setAttribute("products", prods);
 
+	    	
+	    		 request.setAttribute("successMessage",stringUtil.MESSAGE_ADDPRODUCT_SUCCESS );
 	    		// Forward the request to the JSP file for display
-	    		request.getRequestDispatcher("/pages/Adminproduct.jsp").forward(request, response);
+	    		request.getRequestDispatcher(stringUtil.PAGE_URL_ADMINPRODUCT).forward(request, response);
 
 	        } else {
+	        	request.setAttribute("errorMessage",stringUtil.MESSAGE_ADDPRODUCT_ERROR );
+	    		// Forward the request to the JSP file for display
+	    		request.getRequestDispatcher(stringUtil.PAGE_URL_ADMINPRODUCT).forward(request, response);
 	            // Error adding product, handle accordingly
 	        }
 

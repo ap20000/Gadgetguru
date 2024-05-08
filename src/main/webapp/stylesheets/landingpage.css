@@ -3,25 +3,17 @@ body {
 }
 
 /* home content */
-.home {
-    width: 100%;
+.home{
     display: flex;
-    align-items: center;
-    background-color: #a9a9a92b;
-    margin-top: 100px; /* Add margin-top to move the header down */
-    height: calc(100vh - 100px); /* Set height to fill the remaining viewport height */
-    overflow: hidden; /* or auto, depending on your content */
+    background: url("../resources/hero.png") no-repeat center;
+    height: 100vh;
+    color: #fff;
+    min-height: 500px;
+    background-size: cover;
+    background-attachment: fixed;
+    font-family: 'Ubuntu', sans-serif;
 }
 
-/* .home {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    background-color: #a9a9a92b;
-    margin-top: 100px; Add margin-top to move the header down
-    height: calc(100vh - 100px); Set height to fill the remaining viewport height
-    overflow: hidden; or auto, depending on your content
-} */
 .home .img {
     flex: 1 1 300px; /* Adjust as needed */
     position: relative;
@@ -36,6 +28,7 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
 .home .content {
     flex: 1 1 400px;
     margin-top: 200px;
@@ -44,7 +37,7 @@ body {
 }
 
 .content h1 {
-    color: rgb(67 0 86);
+    color: rgb(67, 0, 86);
     font-weight: bold;
     margin-left: 0; /* Remove the margin on the left */
     font-size: 55px;
@@ -52,7 +45,7 @@ body {
 }
 
 .content h1 span {
-    color: rgb(67 0 86);
+    color: rgb(67, 0, 86);
     text-shadow: 1px 1px 1px black;
 }
 
@@ -65,7 +58,7 @@ body {
 }
 
 .btn {
-	margin-top:100px;
+    margin-top: 100px;
     margin-left: 0; /* Remove the margin on the left */
     text-align: center; /* Center the button */
 }
@@ -74,7 +67,7 @@ body {
     width: 150px;
     height: 32px;
     letter-spacing: 3px;
-    background-color: rgb(67 0 86);
+    background-color: rgb(67, 0, 86);
     color: white;
     border-radius: 5px;
     border: none;
@@ -120,7 +113,6 @@ body {
     height: 200px; /* Set a fixed height for the images */
     object-fit: cover; /* Maintain aspect ratio and crop if necessary */
 }
-
 
 .product-info {
     padding: 15px;

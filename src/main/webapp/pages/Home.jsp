@@ -37,7 +37,7 @@
 		                <img src="${pageContext.request.contextPath}/resources/images/user/${product.product_image}" alt="Product Image">
 		                <div class="product-info">
 		                    <h2 class="product-name">${product.computer_name}</h2>
-		                    <p class="product-title">Product Title: ${product.product_title}</p>
+	<%-- 	                    <p class="product-title">Product Title: ${product.product_title}</p> --%>
 		                    <p class="product-price">${product.price}</p>
 		                    <a href="#" class="buy-btn">Buy Now</a>
 		                </div>

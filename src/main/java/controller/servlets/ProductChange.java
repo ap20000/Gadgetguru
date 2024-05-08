@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import controller.database.GadgetDbController;
 import model.ProductModeldata;
+import util.stringUtil;
 
 /**
  * Servlet implementation class ProductChange
@@ -56,6 +57,7 @@ public class ProductChange extends HttpServlet {
     		// Set the products as an attribute in the request
     		request.setAttribute("products", prods);
 
+    		request.setAttribute("errorMessage",stringUtil.MESSAGE_DELETEPRODUCT_SUCCESS );
     		// Forward the request to the JSP file for display
     		request.getRequestDispatcher("/pages/Adminproduct.jsp").forward(request, response);
         }

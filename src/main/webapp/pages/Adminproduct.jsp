@@ -30,6 +30,11 @@ String contextPath = request.getContextPath();
 		           <div style="color: red;"><%= error %></div>
 		     	 <% }
 	     	%>
+	     	
+	     	<% String success = (String) request.getAttribute(stringUtil.MESSAGE_SUCCESS); %>
+		<% if (success != null && !success.isEmpty()) { %>
+   		<div style="color: green;"><%= success %></div>
+		<% } %>
 
     <div class="admin-product-form-container">
 

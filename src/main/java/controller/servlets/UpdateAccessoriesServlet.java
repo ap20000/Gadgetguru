@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import controller.database.GadgetDbController;
 import model.ProductModeldata;
+import util.stringUtil;
 
 /**
  * Servlet implementation class UpdateAccessoriesServlet
@@ -49,14 +50,14 @@ public class UpdateAccessoriesServlet extends HttpServlet {
         } catch (NumberFormatException e) {
             // Handle the case where price is not a valid double
             e.printStackTrace(); // Log the exception
-            response.sendRedirect(request.getContextPath() + "/pages/Adminproduct.jsp?error=true");
+            response.sendRedirect(request.getContextPath() + "stringUtil.PAGE_URL_ADMINPRODUCT");
             return; // Exit the method to avoid further processing
         }
 
         // Check if helmetId is null or empty
         if (productId == null || productId.isEmpty()) {
             // Handle the case where helmetId is null or empty
-            response.sendRedirect(request.getContextPath() + "/pages/Adminproduct.jsp?error=true");
+            response.sendRedirect(request.getContextPath() + "stringUtil.PAGE_URL_ADMINPRODUCT");
             return; // Exit the method to avoid further processing
         }
 
@@ -66,9 +67,11 @@ public class UpdateAccessoriesServlet extends HttpServlet {
 
         // Redirect back to the original JSP page with success or error message
         if (result == 1) {
-            response.sendRedirect(request.getContextPath() + "/pages/Adminproduct.jsp?success=true");
+            request.setAttribute("errorMessage",stringUtil.MESSAGE_EDITPRODUCT_SUCCESS );
+            request.getRequestDispatcher(stringUtil.PAGE_URL_ADMINPRODUCT).forward(request, response);
         } else {
-            response.sendRedirect(request.getContextPath() + "/pages/Adminproduct.jsp?error=true");
+        	 request.setAttribute("errorMessage",stringUtil.MESSAGE_EDITPRODUCT_ERROR );
+        	 request.getRequestDispatcher(stringUtil.PAGE_URL_UPDATEPRODUCT).forward(request, response);
         }
 	}
 

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import controller.database.GadgetDbController;
+import util.stringUtil;
 
 /**
  * Servlet implementation class EditAccessoriesServlet
@@ -48,8 +49,9 @@ public class EditAccessoriesServlet extends HttpServlet {
         request.setAttribute("price", price);
        
 
+        request.setAttribute("errorMessage",stringUtil.MESSAGE_EDITPRODUCT_SUCCESS );
         // Forward to the JSP for editing
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/pages/Updateproduct.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("stringUtil.PAGE_URL_ADMINPRODUCT");
         dispatcher.forward(request, response);
 	}
 

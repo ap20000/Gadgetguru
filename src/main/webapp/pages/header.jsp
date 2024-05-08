@@ -30,7 +30,7 @@
                 <li><a href="#home" class="menu-btn">Home</a></li>
                 <li><a href="#about" class="menu-btn">About</a></li>
                 <li><a href="${pageContext.request.contextPath}/pages/userproduct.jsp" class="menu-btn">Product</a></li>
-                <li><a href="${pageContext.request.contextPath}/pages/Profile.jsp" class="menu-btn">Profile</a></li>
+                <li><a href="${pageContext.request.contextPath}/pages/profile.jsp" class="menu-btn">Profile</a></li>
                 <li><a href="${pageContext.request.contextPath}/pages/contact.jsp" class="menu-btn">Contact</a></li>
                 <li>
                     <div class="search-container">
