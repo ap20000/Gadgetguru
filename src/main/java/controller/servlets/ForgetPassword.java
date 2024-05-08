@@ -39,19 +39,19 @@ public class ForgetPassword extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    String username = request.getParameter("username");
-	    System.out.println("Username: " + username);
-	    String newPassword = request.getParameter("newPassword");
-	    System.out.println("New Password: " + newPassword);
+	    String user_Name = request.getParameter("user_Name");
+	    System.out.println("Username: " + user_Name);
+	    String new_Password = request.getParameter("new_Password");
+	    System.out.println("New Password: " + new_Password);
 
 	    // Call the updateUserPasswordIfValid method from GadgetDbController
-	    int result = dbController.updateUserPasswordIfValid(username, newPassword); 
+	    int result = dbController.ValidupdateUserPassword(user_Name, new_Password); 
 	    // Pass only the new password
 
 	    System.out.println("Result: " + result);
 	    if (result == 1) {
 	        // Password updated successfully
-	        System.out.println("Password updated successfully for user: " + username);
+	        System.out.println("Password updated successfully for user: " + user_Name);
 	        // Redirect to a success page or show a success message
 	    } else if (result == -2) {
 	        // Incorrect old password

@@ -8,6 +8,7 @@
  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/stylesheets/contact.css" />
 </head>
 <body>
+<jsp:include page="header.jsp"/> 
   <div class="container">
     <div class="content">
       <div class="left-side">
@@ -50,5 +51,6 @@
     </div>
     </div>
   </div>
+ <jsp:include page="footer.jsp"/> 
 </body>
 </html>

@@ -15,11 +15,11 @@
       <form action="/GadgetGuru_Accessories/ForgetPassword" method="POST" >
         <div class="input-icon">
           <i class="fas fa-user"></i>
-          <input type="text" id="username" name="username" placeholder="Enter your username">
+          <input type="text" id="user_Name" name="user_Name" placeholder="Enter your username">
         </div>
         <div class="input-icon">
           <i class="fas fa-lock"></i>
-          <input type="password" id="newPassword" name="newPassword" placeholder="Enter your new password">
+          <input type="password" id="new_Password" name="new_Password" placeholder="Enter your new password">
         </div>
         <div class="input-icon">
           <i class="fas fa-lock"></i>

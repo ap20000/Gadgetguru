@@ -28,11 +28,12 @@ public class stringUtil {
     public static final String confirm_password = "confirmpassword";
     public static final String gender = "gender";
     public static final String role = "role";
+    
    
  // Start: Validation Messages
  		// Register Page Messages
- 	public static final String MESSAGE_SUCCESS_REGISTER = "Successfully Registered!";
- 	public static final String MESSAGE_ERROR_REGISTER = "Please correct the form data.";
+ 	public static final String SUCCESS_MESSAGE_REGISTER = "Successfully Registered!";
+ 	public static final String ERROR_MESSAGE_REGISTER = "Please correct the form data.";
  	public static final String MESSAGE_ERROR_USERNAME = "Username is already registered.";
  	public static final String MESSAGE_ERROR_EMAIL = "Email is already registered.";
  	public static final String MESSAGE_ERROR_PHONE_NUMBER = "Phone number is already registered.";
@@ -52,14 +53,21 @@ public class stringUtil {
  	public static final String MESSAGE_ERROR = "errorMessage";
  	// End: Validation Messages
  	
- 	public static final String PAGE_URL_LOGIN = "/pages/login.jsp";
-	public static final String PAGE_URL_REGISTER = "/pages/register.jsp";
-	public static final String PAGE_URL_WELCOME = "/pages/welcome.jsp";
-	public static final String PAGE_URL_FOOTER = "pages/footer.jsp";
-	public static final String PAGE_URL_HEADER = "pages/header.jsp";
-	public static final String URL_LOGIN = "/login.jsp";
-	public static final String URL_INDEX = "/landingpage.jsp";
+ 	public static final String URL_PAGE_LOGIN = "/pages/login.jsp";
+	public static final String URL_PAGE_REGISTER = "/pages/register.jsp";
+	public static final String URL_PAGE_HOME = "/pages/.jsp";
+	public static final String URL_PAGE_FOOTER = "pages/footer.jsp";
+	public static final String URL_PAGE_HEADER = "pages/header.jsp";
+	public static final String URL_PAGE_FORGETPASSWORD = "pages/header.jsp";
+	public static final String URL_PAGE_CONTACT = "pages/header.jsp";
+	public static final String URL_PAGE_ABOUT = "pages/header.jsp";
+	public static final String URL_LANDINGPAGE = "/landingpage.jsp";
 	public static final String PAGE_URL_DASHBOARD = "/pages/Dashboard.jsp";
+	public static final String PAGE_URL_ADMINPRODUCT = "/pages/Dashboard.jsp";
+	public static final String PAGE_URL_USERPRODUCT = "/pages/Dashboard.jsp";
+	public static final String PAGE_URL_UPDATEPRODUCT = "/pages/Dashboard.jsp";
+	public static final String PAGE_URL_UPDATEPROFILE = "/pages/Dashboard.jsp";
+	public static final String PAGE_URL_PROFILE = "/pages/Dashboard.jsp";
 	// End: JSP Route
 
 	// Start: Servlet Route

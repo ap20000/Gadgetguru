@@ -43,50 +43,50 @@ public class RegisterServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String user_Name = request.getParameter(stringUtil.user_name);
-		if (user_Name.length() < 6) {
-            String errorMessage = "Invalid User name. Please enter more than 6 characters";
+		if (user_Name.length() <= 6) {
+            String errorMessage = "Unvalid username. Please enter more than six characters.";
             request.setAttribute(stringUtil.MESSAGE_ERROR, errorMessage);
-            request.getRequestDispatcher(stringUtil.PAGE_URL_REGISTER).forward(request, response);
+            request.getRequestDispatcher(stringUtil.URL_PAGE_REGISTER).forward(request, response);
             return;
         }
 
         if (!user_Name.matches("^[a-zA-Z0-9]{6,}$")) {
-            String errorMessage = "Invalid User name. Please don't enter symbols.";
+            String errorMessage = "Unvalid username. Don't enter symbols, please.";
             request.setAttribute(stringUtil.MESSAGE_ERROR, errorMessage);
-            request.getRequestDispatcher(stringUtil.PAGE_URL_REGISTER).forward(request, response);
+            request.getRequestDispatcher(stringUtil.URL_PAGE_REGISTER).forward(request, response);
             return;
         }
-        if (dbController.isUsernameExists(user_Name)) {
-            String errorMessage = "Username already exists. Please choose a different username.";
+        if (dbController.UsernameExists(user_Name)) {
+            String errorMessage = "Username is already in use. Kindly select an other username.";
             request.setAttribute(stringUtil.MESSAGE_ERROR, errorMessage);
-            request.getRequestDispatcher(stringUtil.PAGE_URL_REGISTER).forward(request, response);
+            request.getRequestDispatcher(stringUtil.URL_PAGE_REGISTER).forward(request, response);
             return;
         }
 		System.out.println("username"+user_Name);
 		String full_Name = request.getParameter(stringUtil.full_name);
 		if (!isValidName(full_Name)) {
-            String errorMessage = "Invalid Full name. Please don't enter symbols and numerical value.";
+            String errorMessage = "Not Valid full  name. Please refrain from entering numbers and symbols.";
             request.setAttribute(stringUtil.MESSAGE_ERROR, errorMessage);
-            request.getRequestDispatcher(stringUtil.PAGE_URL_REGISTER).forward(request, response);
+            request.getRequestDispatcher(stringUtil.URL_PAGE_REGISTER).forward(request, response);
             return;
         }
 		String email = request.getParameter(stringUtil.email);
-		if (dbController.isEmailExists(email)) {
-            String errorMessage = "Email already exists. Please use a different email address.";
+		if (dbController.EmailExists(email)) {
+            String errorMessage = "Email is already in usage. Kindly send emails from a different address.";
             request.setAttribute(stringUtil.MESSAGE_ERROR, errorMessage);
-            request.getRequestDispatcher(stringUtil.PAGE_URL_REGISTER).forward(request, response);
+            request.getRequestDispatcher(stringUtil.URL_PAGE_REGISTER).forward(request, response);
             return;
         }
 		String phone_Number = request.getParameter(stringUtil.phone_number);
 		if (phone_Number.length() != 10) {
-            request.setAttribute(stringUtil.MESSAGE_ERROR, "Invalid number. Phone Number must be of 10 characters.");
-            request.getRequestDispatcher(stringUtil.PAGE_URL_REGISTER).forward(request, response);
+            request.setAttribute(stringUtil.MESSAGE_ERROR, "Unvalid phone number. The phone number has to have ten characters.");
+            request.getRequestDispatcher(stringUtil.URL_PAGE_REGISTER).forward(request, response);
             return;
         }
-		if (dbController.isPhoneNumberExists(phone_Number)) {
-            String errorMessage = "Phone number already exists. Please use a different phone number.";
+		if (dbController.PhoneNumberExists(phone_Number)) {
+            String errorMessage = "Number is already in place. Kindly call from a different number.";
             request.setAttribute(stringUtil.MESSAGE_ERROR, errorMessage);
-            request.getRequestDispatcher(stringUtil.PAGE_URL_REGISTER).forward(request, response);
+            request.getRequestDispatcher(stringUtil.URL_PAGE_REGISTER).forward(request, response);
             return;
         }
 		String dobString = request.getParameter(stringUtil.dobString);
@@ -116,23 +116,23 @@ public class RegisterServlet extends HttpServlet {
 	        }
 	        if (dob.isAfter(LocalDate.now())) {
 	            request.setAttribute(stringUtil.MESSAGE_ERROR, "Invalid birthday date.");
-	            request.getRequestDispatcher(stringUtil.PAGE_URL_REGISTER).forward(request, response);
+	            request.getRequestDispatcher(stringUtil.URL_PAGE_REGISTER).forward(request, response);
 	            return;
 	        }
 		String address = request.getParameter(stringUtil.address);
 		String password = request.getParameter(stringUtil.password);
 		if (!password.matches("^(?=.*[a-z])(?=.*\\d).{5,}$")) {
             request.setAttribute(stringUtil.MESSAGE_ERROR,
-                    "Invalid password. Password must contain at least one lowercase letter and one digit.");
-            request.getRequestDispatcher(stringUtil.PAGE_URL_REGISTER).forward(request, response);
+                    "Password not valid. A minimum of one lowercase letter and one digit are required in the password.");
+            request.getRequestDispatcher(stringUtil.URL_PAGE_REGISTER).forward(request, response);
             return;
         }
 
 
         if (password.length() <= 6) {
-            String errorMessage = "Invalid Password. Please enter more than 6 characters";
+            String errorMessage = "Invalid Password. Please type more than six words.";
             request.setAttribute(stringUtil.MESSAGE_ERROR, errorMessage);
-            request.getRequestDispatcher(stringUtil.PAGE_URL_REGISTER).forward(request, response);
+            request.getRequestDispatcher(stringUtil.URL_PAGE_REGISTER).forward(request, response);
             return;
         }
 		String gender = request.getParameter(stringUtil.gender);
@@ -141,9 +141,9 @@ public class RegisterServlet extends HttpServlet {
 	
         String confirmPassword = request.getParameter("confirmpassword");
         if (!password.equals(confirmPassword)) { 
-            String errorMessage = "Password and Confirm Password do not match.";
+            String errorMessage = "Password and Confirm The passwords don't match.";
          request.setAttribute(stringUtil.MESSAGE_ERROR, errorMessage);
-         request.getRequestDispatcher(stringUtil.PAGE_URL_REGISTER).forward(request,
+         request.getRequestDispatcher(stringUtil.URL_PAGE_REGISTER).forward(request,
          response); return; }
          
         
@@ -161,19 +161,19 @@ public class RegisterServlet extends HttpServlet {
 			user_image.write(savePath + fileName);
 
 		System.out.println(user.getUserImageUrl());
-		int result = dbController.addUser(user);
+		int result = dbController.AddUserNew(user);
 
 		if (result == 1) {
-			request.setAttribute(stringUtil.MESSAGE_SUCCESS_REGISTER, stringUtil.MESSAGE_SUCCESS_REGISTER);
-			response.sendRedirect(request.getContextPath() + stringUtil.PAGE_URL_LOGIN);
+			request.setAttribute(stringUtil.SUCCESS_MESSAGE_REGISTER, stringUtil.SUCCESS_MESSAGE_REGISTER);
+			response.sendRedirect(request.getContextPath() + stringUtil.URL_PAGE_LOGIN);
 		} else if (result == 0) {
 			// No rows affected
 			request.setAttribute(stringUtil.MESSAGE_ERROR, "Registration failed. Please try again.");
-			request.getRequestDispatcher(stringUtil.PAGE_URL_REGISTER).forward(request, response);
+			request.getRequestDispatcher(stringUtil.URL_PAGE_REGISTER).forward(request, response);
 		} else if (result == -1) {
 			// Error occurred
 			request.setAttribute(stringUtil.MESSAGE_ERROR, "An unexpected error occurred. Please try again later.");
-			request.getRequestDispatcher(stringUtil.PAGE_URL_REGISTER).forward(request, response);
+			request.getRequestDispatcher(stringUtil.URL_PAGE_REGISTER).forward(request, response);
 		}
 
 	}

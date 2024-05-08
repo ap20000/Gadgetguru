@@ -15,14 +15,30 @@ body {
     padding: 20px;
     display: flex;
     flex-wrap: wrap;
+    background-color: #B3C8CF;
     justify-content: space-between;
 }
 
 .products {
+    text-align: center; /* Center align the content */
     background-color: #fff;
     padding: 20px;
     margin-top: 20px;
 }
+
+.lg-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.text-light {
+    color: #888;
+    font-size: 1rem;
+    line-height: 1.5;
+    text-align: center; /* Center align the text */
+}
+
 
 .product {
     width: 30%; /* Adjust as needed */
@@ -39,7 +55,6 @@ body {
     height: 200px; /* Set a fixed height for the images */
     object-fit: cover; /* Maintain aspect ratio and crop if necessary */
 }
-
 
 .product-info {
     padding: 15px;
@@ -61,7 +76,7 @@ body {
     display: block;
     width: 100%;
     padding: 10px;
-    background-color: #007bff;
+    background-color: #B3C8CF;
     color: #fff;
     text-align: center;
     text-decoration: none;
@@ -71,17 +86,5 @@ body {
 }
 
 .buy-btn:hover {
-    background-color: #0056b3;
-}
-
-.lg-title {
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 20px;
-}
-
-.text-light {
-    color: #888;
-    font-size: 1rem;
-    line-height: 1.5;
+    background-color: #ff0000;
 }

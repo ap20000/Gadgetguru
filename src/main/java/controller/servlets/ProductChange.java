@@ -43,15 +43,15 @@ public class ProductChange extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String deleteIdString = request.getParameter("delete_id");
+		String deleteIdaccessories = request.getParameter("delete_accessories");
         //String updateIdString = request.getParameter("updateId");
 
-        if (deleteIdString != null && !deleteIdString.isEmpty()) {
-            int deleteId = Integer.parseInt(deleteIdString);
+        if (deleteIdaccessories != null && !deleteIdaccessories.isEmpty()) {
+            int deleteId = Integer.parseInt(deleteIdaccessories);
             dbController.deletegadgetguru(deleteId);
             System.out.println("Deleted");
             
-            ArrayList<ProductModeldata> prods = dbController.getAllProducts();
+            ArrayList<ProductModeldata> prods = dbController.getAllAccessories();
 
     		// Set the products as an attribute in the request
     		request.setAttribute("products", prods);

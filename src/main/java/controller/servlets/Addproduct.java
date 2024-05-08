@@ -42,7 +42,7 @@ public class Addproduct extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		ArrayList<ProductModeldata> prods = dbController.getAllProducts();
+		ArrayList<ProductModeldata> prods = dbController.getAllAccessories();
 
 		// Set the products as an attribute in the request
 		request.setAttribute("products", prods);
@@ -65,7 +65,7 @@ public class Addproduct extends HttpServlet {
 	        // Computer name contains numbers or symbols, handle the error
 	        String errorMessage = "Invalid product name. Product name should only contain letters and spaces.";
 	        request.setAttribute(stringUtil.MESSAGE_ERROR, errorMessage);
-	        request.getRequestDispatcher(stringUtil.PAGE_URL_REGISTER).forward(request, response);
+	        request.getRequestDispatcher(stringUtil.URL_PAGE_REGISTER).forward(request, response);
 	        return;
 	    }
 	    double price = 0.0; // Default value in case of null
@@ -77,13 +77,13 @@ public class Addproduct extends HttpServlet {
 	            // Handle parsing error
 	            String errorMessage = "Invalid price. Price should be a number.";
 	            request.setAttribute(stringUtil.MESSAGE_ERROR, errorMessage);
-	            request.getRequestDispatcher(stringUtil.PAGE_URL_REGISTER).forward(request, response);
+	            request.getRequestDispatcher(stringUtil.URL_PAGE_REGISTER).forward(request, response);
 	            return;
 	        }
 	    } else {
 	        String errorMessage = "Price is required.";
 	        request.setAttribute(stringUtil.MESSAGE_ERROR, errorMessage);
-	        request.getRequestDispatcher(stringUtil.PAGE_URL_REGISTER).forward(request, response);
+	        request.getRequestDispatcher(stringUtil.URL_PAGE_REGISTER).forward(request, response);
 	        return;
 	    }
 
@@ -97,11 +97,11 @@ public class Addproduct extends HttpServlet {
 	        if (!fileName.isEmpty() && fileName != null)
 	            product_image.write(savePath + fileName);
 
-	        int result = dbController.addProduct(productModel);
+	        int result = dbController.AddProductAccessories(productModel);
 
 	        if (result > 0) {
 	            // Product added successfully, redirect to admin page
-	        	ArrayList<ProductModeldata> prods = dbController.getAllProducts();
+	        	ArrayList<ProductModeldata> prods = dbController.getAllAccessories();
 
 	    		// Set the products as an attribute in the request
 	    		request.setAttribute("products", prods);

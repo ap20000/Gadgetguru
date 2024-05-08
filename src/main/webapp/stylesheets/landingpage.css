@@ -13,23 +13,29 @@ body {
     overflow: hidden; /* or auto, depending on your content */
 }
 
-.home {
+/* .home {
     width: 100%;
     display: flex;
     align-items: center;
     background-color: #a9a9a92b;
-    margin-top: 100px; /* Add margin-top to move the header down */
-    height: calc(100vh - 100px); /* Set height to fill the remaining viewport height */
-    overflow: hidden; /* or auto, depending on your content */
-}
+    margin-top: 100px; Add margin-top to move the header down
+    height: calc(100vh - 100px); Set height to fill the remaining viewport height
+    overflow: hidden; or auto, depending on your content
+} */
 .home .img {
-    flex: 1 1 300px;
-}
-.home .img img {
-    margin-top: 30px;
-    width: 100%;
+    flex: 1 1 300px; /* Adjust as needed */
+    position: relative;
+    overflow: hidden;
 }
 
+.home .img img {
+    width: 100%;
+    height: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
 .home .content {
     flex: 1 1 400px;
     margin-top: 200px;
@@ -59,6 +65,7 @@ body {
 }
 
 .btn {
+	margin-top:100px;
     margin-left: 0; /* Remove the margin on the left */
     text-align: center; /* Center the button */
 }
@@ -73,6 +80,8 @@ body {
     border: none;
     transition: 0.5s ease;
     cursor: pointer;
+    padding: 10px 20px; /* Add padding */
+    margin-top: 20px; /* Add margin */
 }
 
 .btn button:hover {
@@ -80,6 +89,7 @@ body {
     color: black;
     border: none;
 }
+
 .container {
     max-width: 1200px;
     margin: 0 auto;

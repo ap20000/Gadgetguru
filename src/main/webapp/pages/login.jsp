@@ -27,7 +27,7 @@
 		           <div style="color: red;"><%= error %></div>
 		     	 <% }
 	     	%>
-            <form action="/GadgetGuru_Accessories/LoginServlet" method="POST">
+            <form action="${pageContext.request.contextPath}/LoginServlet" method="POST">
                 <div class="input-icon">
                     <i class="fas fa-user"></i>
                     <input type="text" id="username" name="username" placeholder="Enter your email">
@@ -44,7 +44,7 @@
 			      
 			      
 			      <div class="register">
-			        <p>Don't have an account? <a href="/pages/register.jsp" id="registerLink">Register</a></p>
+			        <p>Don't have an account? <a href="${pageContext.request.contextPath}/pages/register.jsp" id="registerLink">Register</a></p>
 			    </div>
 
             </form>

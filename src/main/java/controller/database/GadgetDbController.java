@@ -30,39 +30,14 @@ public class GadgetDbController {
 		return DriverManager.getConnection(url, user, pass);
 	}
 
-	public ArrayList<AccessoriesUserModel> getAllStudent() {
-		try (Connection con = getConnection();
-				PreparedStatement st = con.prepareStatement(stringUtil.GET_LOGIN_STUDENT_INFO)) {
-			ResultSet rs = st.executeQuery();
-			ArrayList<AccessoriesUserModel> users = new ArrayList<>();
+	
 
-			while (rs.next()) {
-				AccessoriesUserModel user = new AccessoriesUserModel();
-				user.setUser_Name(rs.getString("User_name"));
-				user.setFull_Name(rs.getString("first_name"));
-				user.setEmail(rs.getString("email"));
-				user.setPhone_Number(rs.getString("Phone_number"));
-				user.setDob(rs.getDate("dob").toLocalDate());
 
-				user.setAddress(rs.getString("Address"));
-				user.setGender(rs.getString("gender"));
-				user.setImageUrlFromDB(rs.getString("user_image"));
 
-				users.add(user);
-			}
-			return users;
-
-		} catch (SQLException | ClassNotFoundException ex) {
-			ex.printStackTrace();
-			return null;
-		}
-
-	}
-
-	public boolean isUsernameExists(String username) {
+	public boolean UsernameExists(String user_Name) {
 		try (Connection con = getConnection();
 				PreparedStatement st = con.prepareStatement("SELECT COUNT(*) FROM user WHERE user_Name = ?")) {
-			st.setString(1, username);
+			st.setString(1, user_Name);
 			try (ResultSet rs = st.executeQuery()) {
 				if (rs.next()) {
 					int count = rs.getInt(1);
@@ -75,10 +50,10 @@ public class GadgetDbController {
 		return false;
 	}
 
-	public boolean isEmailExists(String email) {
+	public boolean EmailExists(String user_email) {
 		try (Connection con = getConnection();
 				PreparedStatement st = con.prepareStatement("SELECT COUNT(*) FROM user WHERE email = ?")) {
-			st.setString(1, email);
+			st.setString(1, user_email);
 			try (ResultSet rs = st.executeQuery()) {
 				if (rs.next()) {
 					int count = rs.getInt(1);
@@ -91,10 +66,10 @@ public class GadgetDbController {
 		return false;
 	}
 
-	public boolean isPhoneNumberExists(String phoneNumber) {
+	public boolean PhoneNumberExists(String phone_Number) {
 		try (Connection con = getConnection();
 				PreparedStatement st = con.prepareStatement("SELECT COUNT(*) FROM user WHERE phone_Number = ?")) {
-			st.setString(1, phoneNumber);
+			st.setString(1, phone_Number);
 			try (ResultSet rs = st.executeQuery()) {
 				if (rs.next()) {
 					int count = rs.getInt(1);
@@ -107,7 +82,7 @@ public class GadgetDbController {
 		return false;
 	}
 
-	public int addUser(AccessoriesUserModel userModel) {
+	public int AddUserNew(AccessoriesUserModel userModel) {
 		try (Connection con = getConnection(); PreparedStatement st = con.prepareStatement(stringUtil.INSERT_User)) {
 			st.setString(1, userModel.getUser_Name());
 			st.setString(2, userModel.getFull_Name());
@@ -167,24 +142,24 @@ public class GadgetDbController {
 //	    }
 //	}
 
-	public LoginResult getUserLoginInfo(UserLoginModel loginModel) {
+	public LoginResult getUserInfo(UserLoginModel accessoriesLogin) {
 		try (Connection con = getConnection()) {
 			PreparedStatement st = con.prepareStatement(stringUtil.GET_LOGIN_STUDENT_INFO);
 
 			// Set the username in the first parameter of the prepared statement
-			st.setString(1, loginModel.getUser_Name());
+			st.setString(1, accessoriesLogin.getUser_Name());
 
 			ResultSet rs = st.executeQuery();
 			if (rs.next()) {
 
-				String userDb = rs.getString("user_name");
+				String accessoriesuser = rs.getString("user_name");
 
 				String encryptedPwd = rs.getString(stringUtil.password);
 
-				String decryptedPwd = PasswordEncryptionWithAes.decrypt(encryptedPwd, userDb);
+				String decryptedPwd = PasswordEncryptionWithAes.decrypt(encryptedPwd, accessoriesuser);
 
-				if (userDb.equalsIgnoreCase(loginModel.getUser_Name()) && decryptedPwd != null
-						&& decryptedPwd.equals((loginModel).getPassword())) {
+				if (accessoriesuser.equalsIgnoreCase(accessoriesLogin.getUser_Name()) && decryptedPwd != null
+						&& decryptedPwd.equals((accessoriesLogin).getPassword())) {
 					String role = rs.getString("role"); // Assuming 'role' is the column name for the user's role
 					if (role != null) {
 						// User role found, return login result with role
@@ -214,16 +189,16 @@ public class GadgetDbController {
             ResultSet rs = st.executeQuery();
 
             if (rs.next()) {
-            	AccessoriesUserModel userprofile = new AccessoriesUserModel();
-            	userprofile.setUser_Name(rs.getString("user_Name"));
-            	userprofile.setFull_Name(rs.getString("full_Name"));
-            	userprofile.setEmail(rs.getString("email"));
-            	userprofile.setPhone_Number(rs.getString("phone_Number"));
-            	userprofile.setDob(rs.getDate("dob").toLocalDate());
-            	userprofile.setGender(rs.getString("address"));
-            	userprofile.setAddress(rs.getString("gender"));
+            	AccessoriesUserModel useraaprofile = new AccessoriesUserModel();
+            	useraaprofile.setUser_Name(rs.getString("user_Name"));
+            	useraaprofile.setFull_Name(rs.getString("full_Name"));
+            	useraaprofile.setEmail(rs.getString("email"));
+            	useraaprofile.setPhone_Number(rs.getString("phone_Number"));
+            	useraaprofile.setDob(rs.getDate("dob").toLocalDate());
+            	useraaprofile.setGender(rs.getString("address"));
+            	useraaprofile.setAddress(rs.getString("gender"));
 //                userProfile.setImageUrlFromDB(rs.getString("user_image"));
-                return userprofile;
+                return useraaprofile;
             } else {
                 // User not found in the database
                 return null;
@@ -233,14 +208,14 @@ public class GadgetDbController {
             return null;
         }
     }
-	 public int Profileupdate(AccessoriesUserModel user) {
+	 public int Profileupdate(AccessoriesUserModel accessoriesuser) {
 	        try (Connection con = getConnection();
 	             PreparedStatement st = con.prepareStatement("UPDATE user SET full_Name=?, email=?, phone_Number=?, address=? WHERE user_Name=?")) {                 
-	            st.setString(1, user.getFull_Name());
-	            st.setString(2, user.getEmail());
-	            st.setString(3, user.getPhone_Number());
-	            st.setString(4, user.getAddress());
-	            st.setString(5, user.getUser_Name());
+	            st.setString(1, accessoriesuser.getFull_Name());
+	            st.setString(2, accessoriesuser.getEmail());
+	            st.setString(3, accessoriesuser.getPhone_Number());
+	            st.setString(4, accessoriesuser.getAddress());
+	            st.setString(5, accessoriesuser.getUser_Name());
 
 	            return st.executeUpdate();
 	        } catch (SQLException | ClassNotFoundException e) {
@@ -248,7 +223,7 @@ public class GadgetDbController {
 	            return -1; // Error
 	        }
 	    }
-	public int updateUserPassword(String username, String newPassword) {
+	public int updateUseraccessoriesPassword(String username, String newPassword) {
 		try (Connection con = getConnection();
 				PreparedStatement st = con.prepareStatement("UPDATE user SET password = ? WHERE user_Name = ?")) {
 			st.setString(1, PasswordEncryptionWithAes.encrypt(username, newPassword));
@@ -267,12 +242,12 @@ public class GadgetDbController {
 		}
 	}
 
-	public int  updateUserPasswordIfValid(String username, String newPassword) {
+	public int  ValidupdateUserPassword(String username, String newPassword) {
 		try (Connection con = getConnection()) {
 			// Check if the username exists in the database
-			if (isUsernameExists(username)) {
+			if (UsernameExists(username)) {
 				// Username exists, update the password
-				return updateUserPassword(username, newPassword);
+				return updateUseraccessoriesPassword(username, newPassword);
 			} else {
 				// Username not found, return -1
 				return -1;
@@ -283,10 +258,10 @@ public class GadgetDbController {
 		}
 	}
 
-	public int deletegadgetguru(int deleteId) {
+	public int deletegadgetguru(int accessoriesId) {
         try (Connection con = getConnection(); 
              PreparedStatement st = con.prepareStatement("DELETE FROM computer WHERE computer_Id = ?")) {
-            st.setInt(1, deleteId);
+            st.setInt(1, accessoriesId);
             
             return st.executeUpdate();
 
@@ -321,13 +296,13 @@ public class GadgetDbController {
 //		return -1;
 //	}
 
-	public int addProduct(ProductModel productModel) {
+	public int AddProductAccessories(ProductModel accessoriesModel) {
 		try (Connection con = getConnection();
 				PreparedStatement st = con.prepareStatement(
 						"INSERT INTO computer (computer_name, price,  product_image) VALUES (?, ?,  ?)")) {
-			st.setString(1, productModel.getComputer_name());
-			st.setDouble(2, productModel.getPrice());
-			st.setString(3, productModel.getUserImageUrl());
+			st.setString(1, accessoriesModel.getComputer_name());
+			st.setDouble(2, accessoriesModel.getPrice());
+			st.setString(3, accessoriesModel.getUserImageUrl());
 			int result = st.executeUpdate();
 
 			if (result > 0) {
@@ -341,7 +316,7 @@ public class GadgetDbController {
 		}
 	}
 
-	public ArrayList<ProductModeldata> getAllProducts() {
+	public ArrayList<ProductModeldata> getAllAccessories() {
 	    try (Connection conn = getConnection();
 	            PreparedStatement stmt = conn.prepareStatement("SELECT * FROM computer");
 	            ResultSet rs = stmt.executeQuery()) {

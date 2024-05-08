@@ -21,10 +21,10 @@
     GadgetDbController dbController = new GadgetDbController();
     
     // Retrieve user profile information from the database based on the logged-in username
-    AccessoriesUserModel userprofile = dbController.getuserprofile(loggedInUsername);
+    AccessoriesUserModel useraaprofile = dbController.getuserprofile(loggedInUsername);
 
     // Check if user profile is null
-    if (userprofile == null) {
+    if (useraaprofile == null) {
         // Handle case where user profile is not found
         // For example, display an error message
         out.println("User profile not found");
@@ -47,42 +47,43 @@
         </div>
         <div class="profile-info">
             <label for="username">Username:</label>
-            <p id="username" name="username"> <%= userprofile.getUser_Name() %></p>
+            <p id="username" name="username"> <%= useraaprofile.getUser_Name() %></p>
         </div>
         <div class="profile-info">
             <label for="fullname">Full Name:</label>
-            <p id="fullname" name="fullname" > <%= userprofile.getFull_Name() %></p>
+            <p id="fullname" name="fullname" > <%= useraaprofile.getFull_Name() %></p>
         </div>
         <div class="profile-info">
             <label for="email">Email:</label>
-            <p id="email" name="email" > <%= userprofile.getEmail() %></p>
+            <p id="email" name="email" > <%= useraaprofile.getEmail() %></p>
         </div>
         <div class="profile-info">
             <label for="phone_number">Phone Number:</label>
-            <p id="phone_number" name="phone_number" > <%= userprofile.getPhone_Number() %></p>
+            <p id="phone_number" name="phone_number" > <%= useraaprofile.getPhone_Number() %></p>
         </div>
         <div class="profile-info">
             <label for="location">Location:</label>
-            <p id="address" name="address" > <%= userprofile.getAddress() %></p>
+            <p id="address" name="address" > <%= useraaprofile.getAddress() %></p>
         </div>
         <div class="profile-info">
             <label for="dob">Date of Birth:</label>
-            <p id="dob" name="dob" > <%= userprofile.getDob() %></p>
+            <p id="dob" name="dob" > <%= useraaprofile.getDob() %></p>
         </div>
         <div class="profile-info">
             <label for="gender">Gender:</label>
-            <p id="gender" name="gender" > <%= userprofile.getGender() %></p>
+            <p id="gender" name="gender" > <%= useraaprofile.getGender() %></p>
         </div>
         <form action="${pageContext.request.contextPath}/ProfileEditServlet" method="post">
-                <input type="hidden" id="username" name="username" value="<%= userprofile.getUser_Name() %>">
-                <input type="hidden" id="fullname" name="fullname" value="<%= userprofile.getFull_Name() %>">
-                <input type="hidden" id="email" name="email" value="<%= userprofile.getEmail() %>">
-                <input type="hidden" id="phone_number" name="phone_number" value="<%= userprofile.getPhone_Number() %>">
-                <input type="hidden" id="address" name="address" value="<%= userprofile.getAddress() %>">
+                <input type="hidden" id="username" name="username" value="<%= useraaprofile.getUser_Name() %>">
+                <input type="hidden" id="fullname" name="fullname" value="<%= useraaprofile.getFull_Name() %>">
+                <input type="hidden" id="email" name="email" value="<%= useraaprofile.getEmail() %>">
+                <input type="hidden" id="phone_number" name="phone_number" value="<%= useraaprofile.getPhone_Number() %>">
+                <input type="hidden" id="address" name="address" value="<%= useraaprofile.getAddress() %>">
 	        <div class="update-button">
                     <button type="submit">Update</button>
-                </div>
+            </div>
 	    </form>
     </div>
+  <jsp:include page="footer.jsp"/> 
    </body>
 </html>

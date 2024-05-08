@@ -49,18 +49,20 @@ input[type="email"]:hover {
 }
 .update-button {
   text-align: center;
-  
   margin: 40px;
 }
-/* Button hover */
-.update-button a {
-  display: inline-block;
+
+/* Button styles */
+.update-button button {
   padding: 10px 20px;
   background-color: #B3C8CF;
   color: #fff;
   border-radius: 3px;
-  text-decoration: none;
+  border: none; /* Remove border */
+  cursor: pointer; /* Add cursor pointer on hover */
 }
-.update-button a:hover {
+
+/* Button hover */
+.update-button button:hover {
   background-color: #ff0000; /* Change background color on hover */
 }

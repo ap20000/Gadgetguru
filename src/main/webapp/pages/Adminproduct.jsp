@@ -76,7 +76,7 @@ String contextPath = request.getContextPath();
                                         <button type="submit" class="btn">Edit</button>
                                     </form>
                                 <form action="/GadgetGuru_Accessories/ProductChange" method="post">
-                                        <input type="hidden" name="delete_id" value="${product.productId}">
+                                        <input type="hidden" name="delete_accessories" value="${product.productId}">
                                         <button type="submit" class="btn">Delete</button>
                                 </form>
                             </td>

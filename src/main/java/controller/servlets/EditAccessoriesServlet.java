@@ -1,4 +1,4 @@
-package model;
+package controller.servlets;
 
 import java.io.IOException;
 

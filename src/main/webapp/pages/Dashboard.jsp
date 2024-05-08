@@ -76,7 +76,7 @@
                         </a>
                     </li>
                     <li>
-                       <a href="">
+                       <a href="${pageContext.request.contextPath}/pages/Profile.jsp">
                             <span class="las la-user-alt"></span>
                             <small>Profile</small>
                         </a>
@@ -100,26 +100,7 @@
     
     <div class="main-content">
         
-        <header>
-            <div class="header-content">
-                <label for="menu-toggle">
-                    <span class="las la-bars"></span>
-                </label>
-                
-                <div class="header-menu">
-                    
-                    
-                    <div class="user">
-                        <div class="bg-img" style="background-image: url(img/1.jpeg)"></div>
-                        
-                        <span class="las la-power-off"></span>
-                        <td>
-                            <span class="">Log Out</span>
-                        </td>
-                    </div>
-                </div>
-            </div>
-        </header>
+        
         
         
         <main>
@@ -177,117 +158,7 @@
                 </div>
 
 
-                <div class="records table-responsive">
-
-                    <div class="record-header">
-                        <div class="add">
-                            <span>Entries</span>
-                            <select name="" id="">
-                                <option value="">ID</option>
-                            </select>
-                            <button>Add record</button>
-                        </div>
-
-                        
-                    </div>
-
-                    <div>
-                        <table width="100%">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th><span class="las la-sort"></span> Product Name </th>
-                                    <th><span class="las la-sort"></span> Price </th>
-                                    <th><span class="las la-sort"></span> Brand</th>
-                                    <th><span class="las la-sort"></span> Stock Qunatity</th>
-                                    <th><span class="las la-sort"></span> ACTIONS</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>
-                                        <div class="client">
-                                           <div class="client-img bg-img" style="background-image: url(img/3.jpeg)"></div>
-                                            <div class="client-info">
-                                                <h4>Mouse</h4>
-                                                <small>Brand</small>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        $3171
-                                    </td>
-                                    <td>
-                                        19 April, 2022
-                                    </td>
-                                    <td>
-                                        -$205
-                                    </td>
-                                    <td>
-                                        <span class="paid">Complete</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>
-                                        <div class="client">
-                                           <div class="client-img bg-img" style="background-image: url(img/1.jpeg)"></div>
-                                            <div class="client-info">
-                                                <h4>keyboard</h4>
-                                                <small>Brand</small>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        $3171
-                                    </td>
-                                    <td>
-                                        19 April, 2022
-                                    </td>
-                                    <td>
-                                        -$205
-                                    </td>
-                                    <td>
-                                        <span class="Unstatus">Uncomplete</span>
-                                    </td>
-                                    
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>
-                                        <div class="client">
-                                           <div class="client-img bg-img" style="background-image: url(img/1.jpeg)"></div>
-                                            <div class="client-info">
-                                                <h4>PC</h4>
-                                                <small>Brand</small>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        $2171
-                                    </td>
-                                    <td>
-                                        19 April, 2022
-                                    </td>
-                                    <td>
-                                        <span class="paid">Paid</span>
-                                    </td>
-                                    <td>
-                                        <span class="Unstatus">Uncomplete</span>
-                                    </td>
-                                </tr>
-                               
-                               
-                                
-                                
-                                
-                                
-                            </tbody>
-                        </table>
-                    </div>
-
-                </div>
+                
             
             </div>
             
