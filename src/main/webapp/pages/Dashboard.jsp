@@ -76,7 +76,7 @@
                         </a>
                     </li>
                     <li>
-                       <a href="${pageContext.request.contextPath}/pages/Profile.jsp">
+                       <a href="${pageContext.request.contextPath}/pages/adminprofile.jsp">
                             <span class="las la-user-alt"></span>
                             <small>Profile</small>
                         </a>
@@ -84,7 +84,7 @@
                     
                     
                     <li>
-                       <a href="${pageContext.request.contextPath}/pages/Adminproduct.jsp">
+                       <a href="${pageContext.request.contextPath}/pages/adminproduct.jsp">
                             <span class="las la-shopping-cart"></span>
                             <small>Product</small>
                         </a>

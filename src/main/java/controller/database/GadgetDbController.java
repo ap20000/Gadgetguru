@@ -195,8 +195,8 @@ public class GadgetDbController {
             	useraaprofile.setEmail(rs.getString("email"));
             	useraaprofile.setPhone_Number(rs.getString("phone_Number"));
             	useraaprofile.setDob(rs.getDate("dob").toLocalDate());
-            	useraaprofile.setGender(rs.getString("address"));
-            	useraaprofile.setAddress(rs.getString("gender"));
+            	useraaprofile.setAddress(rs.getString("address"));
+            	useraaprofile.setGender(rs.getString("gender"));
 //                userProfile.setImageUrlFromDB(rs.getString("user_image"));
                 return useraaprofile;
             } else {

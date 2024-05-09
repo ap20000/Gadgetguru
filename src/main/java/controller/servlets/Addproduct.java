@@ -48,7 +48,7 @@ public class Addproduct extends HttpServlet {
 		request.setAttribute("products", prods);
 
 		// Forward the request to the JSP file for display
-		request.getRequestDispatcher("/pages/Adminproduct.jsp").forward(request, response);
+		request.getRequestDispatcher(stringUtil.PAGE_URL_ADMINPRODUCT).forward(request, response);
 	}
 
 	/**
@@ -71,21 +71,26 @@ public class Addproduct extends HttpServlet {
 	    double price = 0.0; // Default value in case of null
 	    String priceParam = request.getParameter("product_price");
 	    if (priceParam != null && !priceParam.trim().isEmpty()) {
-	        try {
+	        // Remove any non-numeric characters from the input
+	       
+	        
+	        // Check if the modified input is not empty
+	        if (!priceParam.isEmpty()) {
 	            price = Double.parseDouble(priceParam);
-	        } catch (NumberFormatException e) {
-	            // Handle parsing error
-	         
-	            request.setAttribute("errorMessage",stringUtil.MESSAGE_PRICE_INVALID );
+	        } else {
+	            // Handle empty input
+	            request.setAttribute("errorMessage", stringUtil.MESSAGE_PRICE_INVALID + " RS. " + priceParam);
 	            request.getRequestDispatcher(stringUtil.URL_PAGE_REGISTER).forward(request, response);
 	            return;
 	        }
 	    } else {
-	       
-	        request.setAttribute("errorMessage",stringUtil.MESSAGE_PRICE );
+	        // Handle null or empty input
+	        request.setAttribute("errorMessage", stringUtil.MESSAGE_PRICE + " RS.");
 	        request.getRequestDispatcher(stringUtil.URL_PAGE_REGISTER).forward(request, response);
 	        return;
 	    }
+
+
 
 	    Part product_image = request.getPart("product_image");
 	    System.out.println("image" + product_image);

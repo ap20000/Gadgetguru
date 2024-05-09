@@ -50,14 +50,14 @@ public class UpdateAccessoriesServlet extends HttpServlet {
         } catch (NumberFormatException e) {
             // Handle the case where price is not a valid double
             e.printStackTrace(); // Log the exception
-            response.sendRedirect(request.getContextPath() + "stringUtil.PAGE_URL_ADMINPRODUCT");
+            response.sendRedirect(request.getContextPath() + stringUtil.PAGE_URL_ADMINPRODUCT);
             return; // Exit the method to avoid further processing
         }
 
-        // Check if helmetId is null or empty
+        
         if (productId == null || productId.isEmpty()) {
             // Handle the case where helmetId is null or empty
-            response.sendRedirect(request.getContextPath() + "stringUtil.PAGE_URL_ADMINPRODUCT");
+            response.sendRedirect(request.getContextPath() + stringUtil.PAGE_URL_ADMINPRODUCT);
             return; // Exit the method to avoid further processing
         }
 
@@ -68,7 +68,7 @@ public class UpdateAccessoriesServlet extends HttpServlet {
         // Redirect back to the original JSP page with success or error message
         if (result == 1) {
             request.setAttribute("errorMessage",stringUtil.MESSAGE_EDITPRODUCT_SUCCESS );
-            request.getRequestDispatcher(stringUtil.PAGE_URL_ADMINPRODUCT).forward(request, response);
+            response.sendRedirect(request.getContextPath()+stringUtil.PAGE_URL_ADMINPRODUCT);
         } else {
         	 request.setAttribute("errorMessage",stringUtil.MESSAGE_EDITPRODUCT_ERROR );
         	 request.getRequestDispatcher(stringUtil.PAGE_URL_UPDATEPRODUCT).forward(request, response);

@@ -66,6 +66,8 @@ public class stringUtil {
  	public static final String MESSAGE_ERROR_USERNAME_LENGTH = "Invalid User name. Please enter more than 6 characters";
  	public static final String MESSAGE_ERROR_USERNAME_INVALIDL = "Invalid User name. Please don't enter symbols.";
  	
+ 	//ForgetPassowrd
+ 	public static final String MESSAGE_SUCCESS_FORGET="Password updated successfully for user";
  	
  	//AdminAddproduct
  	public static final String MESSAGE_COMPUTERNAME_INVALID = "Invalid product name. Product name should only contain letters and spaces.";
@@ -91,7 +93,7 @@ public class stringUtil {
 	public static final String URL_PAGE_HOME = "/pages/home.jsp";
 	public static final String URL_PAGE_FOOTER = "pages/footer.jsp";
 	public static final String URL_PAGE_HEADER = "pages/header.jsp";
-	public static final String URL_PAGE_FORGETPASSWORD = "pages/header.jsp";
+	public static final String URL_PAGE_FORGETPASSWORD = "pages/forgetPassword.jsp";
 	public static final String URL_PAGE_CONTACT = "pages/header.jsp";
 	public static final String URL_PAGE_ABOUT = "pages/header.jsp";
 	public static final String URL_LANDINGPAGE = "/landingpage.jsp";

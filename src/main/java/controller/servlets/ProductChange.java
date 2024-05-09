@@ -59,7 +59,7 @@ public class ProductChange extends HttpServlet {
 
     		request.setAttribute("errorMessage",stringUtil.MESSAGE_DELETEPRODUCT_SUCCESS );
     		// Forward the request to the JSP file for display
-    		request.getRequestDispatcher("/pages/Adminproduct.jsp").forward(request, response);
+    		request.getRequestDispatcher("/pages/adminproduct.jsp").forward(request, response);
         }
 	}
 

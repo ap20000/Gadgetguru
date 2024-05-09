@@ -7,21 +7,29 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql" %>
  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/stylesheets/home.css" /> 
+
 </head>
 <body>
+<style>
+
+
+</style>
 <jsp:include page="header.jsp"/> 
   <main>
     <article>
 
-      <section class="hero" id="home" style="background-image: url('${pageContext.request.contextPath}/resources/home.png')">
-        <div class="container">
-          <div class="hero-content">
-            <p class="hero-subtitle">Computer Accessories</p>
-            <h2 class="h1 hero-title">Unrivalled Fashion House</h2>
-            <button class="btn btn-primary">Shop Now</button>
-          </div>
+      <section class="home" id="home"style="background-image: url('${pageContext.request.contextPath}/resources/home.png')">
+        <div class="max-width">
+            <div class="home-content">
+                <div class="text-1">Welcome to,</div>
+                <div class="text-2">Computer</div>
+                <div class="text-3">Accessories</div>
+                
+                <a href="https://t.me/abhi_0214">Hire me</a>
+                
+            </div>
         </div>
-      </section>
+    </section>
       
       <sql:setDataSource var="dataSource" driver="com.mysql.cj.jdbc.Driver" url="jdbc:mysql://localhost:3306/gadgetguru_accessories" user="root" password="" />
       <sql:query dataSource="${dataSource}" var="products">
@@ -55,6 +63,10 @@
   <script src="./assets/js/script.js"></script>
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-  <jsp:include page="footer.jsp"/> 
+<footer>
+<jsp:include page="footer.jsp"/> 
+</footer>
+
+
 </body>
 </html>

@@ -51,7 +51,7 @@ public class EditAccessoriesServlet extends HttpServlet {
 
         request.setAttribute("errorMessage",stringUtil.MESSAGE_EDITPRODUCT_SUCCESS );
         // Forward to the JSP for editing
-        RequestDispatcher dispatcher = request.getRequestDispatcher("stringUtil.PAGE_URL_ADMINPRODUCT");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/pages/updateproduct.jsp");
         dispatcher.forward(request, response);
 	}
 

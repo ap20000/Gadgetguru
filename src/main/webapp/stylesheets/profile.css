@@ -2,14 +2,14 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #fff;
+  background-color: #B3C8CF;
 }
 
 .profile {
   max-width: 400px;
    margin: 50px auto 0; 
   padding: 20px;
-  background-color: #a9a9a92b;
+  background-color: #fff;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
@@ -20,15 +20,19 @@ body {
 .profile label {
   font-weight: bold;
 }
-.profile-image img {
+.profile-image i {
   display: block;
-  margin: 0 auto 20px; /* Center the image and add some margin at the bottom */
-  width: 150px; /* Set the width of the image */
-  height: 150px; /* Set the height of the image */
-  border-radius: 50%; /* Make the image round */
-  object-fit: cover; /* Cover the entire area of the container */
-  object-position: center; /* Center the image within the container */
+  margin: 0 auto 20px; 
+  font-size: 150px; 
+  line-height: 150px;
+  width: 150px; 
+  height: 150px; 
+  text-align: center; 
+  border-radius: 50%; 
+  background-color: #ccc; 
+  color: #fff; 
 }
+
 
 .profile-info {
   margin-bottom: 20px;
@@ -36,7 +40,7 @@ body {
 }
 .profile-info label {
   display: inline-block;
-  width: 100px;
+
 }
 .profile-info p {
   display: inline-block;

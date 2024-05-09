@@ -33,7 +33,7 @@
     }
     .form-group input[type="text"]:hover,
     .form-group input[type="email"]:hover {
-        border-color: #007bff; /* Change border color on hover */
+        border-color: #ff0000; /* Change border color on hover */
     }
     .form-group input[type="submit"] {
         padding: 10px 20px;

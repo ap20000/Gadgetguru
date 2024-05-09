@@ -5,16 +5,17 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/stylesheets/updateproduct.css" />
 </head>
 <style>
    
 </style>
 <body>
     <div class="profile-form">
-        <h2>User Profile Form</h2>
+        <h2>Product Update</h2>
         <form action="${pageContext.request.contextPath}/UpdateAccessoriesServlet" method="post">
 	        <div class="form-group">
-	                <label for="computer_Id">Product Name:</label>
+	                <label for="computer_Id">Product Id:</label>
 	                <input type="text" id="computer_Id" name="computer_Id" value="${computer_Id}" readonly>
 	         </div>
             <div class="form-group">

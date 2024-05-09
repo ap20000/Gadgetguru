@@ -40,7 +40,7 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/stylesheets/profile.css">
 </head>
 <body>
-<jsp:include page="header.jsp"/> 
+
     <div class="profile">
         <h2>User Profile</h2>
         <div class="profile-image">
@@ -74,7 +74,7 @@
             <label for="gender">Gender:</label>
             <p id="gender" name="gender" > <%= useraaprofile.getGender() %></p>
         </div>
-        <form action="${pageContext.request.contextPath}/ProfileEditServlet" method="post">
+        <%-- <form action="${pageContext.request.contextPath}/ProfileEditServlet" method="post">
                 <input type="hidden" id="username" name="username" value="<%= useraaprofile.getUser_Name() %>">
                 <input type="hidden" id="fullname" name="fullname" value="<%= useraaprofile.getFull_Name() %>">
                 <input type="hidden" id="email" name="email" value="<%= useraaprofile.getEmail() %>">
@@ -83,8 +83,35 @@
 	        <div class="update-button">
                     <button type="submit">Update</button>
             </div>
-	    </form>
+	    </form> --%>
+	    
+	    <div class="goback-container">
+	        <a href="${pageContext.request.contextPath}/pages/Dashboard.jsp" class="btn">Go Back</a>
+	    </div>
     </div>
+    <style>
+        <style>
+     .goback-container {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 1000; /* Ensure it's above other elements */
+}
+
+.goback-container .btn {
+    padding: 8px 16px;
+    background-color: #B3C8CF;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    text-decoration: none;
+}
+
+.goback-container .btn:hover {
+    background-color: #ff0000;
+}
+    </style>
+    </style>
 
    </body>
 </html>

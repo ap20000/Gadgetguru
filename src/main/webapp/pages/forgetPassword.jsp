@@ -16,7 +16,7 @@
       <form action="/GadgetGuru_Accessories/ForgetPassword" method="POST" >
         <div class="input-icon">
           <i class="fas fa-user"></i>
-          <input type="text" id="username" name="<%=stringUtil.user_Name %>" placeholder="Enter your username">
+          <input type="text" id="username" name="<%=stringUtil.user_name %>" placeholder="Enter your username">
         </div>
         <div class="input-icon">
           <i class="fas fa-lock"></i>

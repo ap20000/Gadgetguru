@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import controller.database.GadgetDbController;
+import util.stringUtil;
 
 /**
  * Servlet implementation class ForgetPassword
@@ -50,10 +51,12 @@ public class ForgetPassword extends HttpServlet {
 
 	    System.out.println("Result: " + result);
 	    if (result == 1) {
+	    	request.setAttribute(stringUtil.MESSAGE_SUCCESS_FORGET, stringUtil.MESSAGE_SUCCESS_FORGET);
+			response.sendRedirect(request.getContextPath() + stringUtil.URL_PAGE_LOGIN);
 	        // Password updated successfully
 	        System.out.println("Password updated successfully for user: " + user_Name);
 	        // Redirect to a success page or show a success message
-	    } else if (result == -2) {
+	    } else if (result == 0) {
 	        // Incorrect old password
 	        // Redirect to a page showing an error message
 	    } else if (result == -1) {

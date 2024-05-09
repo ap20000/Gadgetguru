@@ -46,7 +46,7 @@ public class AuthenticationFilter implements Filter {
      
         if (LogIn && "admin".equals(accessories_role)) {
            
-        	if (httpRequest.getRequestURI().endsWith("/pages/Adminproduct.jsp")) {
+        	if (httpRequest.getRequestURI().endsWith("/pages/adminproduct.jsp")) {
                
         		ArrayList<ProductModeldata> prods = dbController.getAllAccessories();
         		request.setAttribute("products", prods);
